@@ -3,11 +3,12 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
-const PageHome = (resolve) => require(['@/views/Home.vue'], resolve)
 const PageEditor = (resolve) => require(['@/views/editor'], resolve)
+const PageList = (resolve) => require(['@/views/list/list'], resolve)
 
 const routes = [
-  { path: '/', name: 'PageHome', component: PageHome },
+  { path: '/', redirect: '/edit/1' },
+  { path: '/list', name: 'PageList', component: PageList },
   { path: '/edit/:id', name: 'PageEditor', props: true, component: PageEditor }
 ]
 

@@ -2,9 +2,17 @@
 import loadModulesMixin from '../../mixins/load-modules'
 import { mapActions, mapState } from 'vuex'
 
+import editorService from '../../service/editor.service.js'
+
 export default {
+  props: {
+    id: {
+      type: String
+    }
+  },
   data () {
     return {
+      pageInitModule: []
     }
   },
   mixins: [loadModulesMixin],
@@ -15,12 +23,38 @@ export default {
         type: 'add',
         value: name
       })
+    },
+    updatePage () {
+      const data = {
+        id: this.id,
+        modules: JSON.stringify(this.elements)
+      }
+
+      console.log(data)
+      editorService.updatePage(data)
+        .then(res => {
+          console.log(res)
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
   },
   computed: {
     ...mapState(['elements'])
   },
-  created () {},
+  created () {
+    editorService.getPageDetail({ id: this.id })
+      .then(res => {
+        console.log('getPageDetail:::', res)
+        // this.pageInitModule = JSON.parse(res.json)
+        const modules = JSON.parse(res.modules)
+        modules.map(module => { this.clone({ name: module.name }) })
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  },
   render (h) {
     return (
       <div>
@@ -39,10 +73,12 @@ export default {
           </div>
           <div class="panel-right">
             { this.elements.map(ele => {
-              return (h(ele.name))
+              return (h(ele.name, { props: { ...ele.moduleProps } }))
             }) }
           </div>
+
         </div>
+        <button class="panel-save-btn" onClick={this.updatePage}>保存</button>
       </div>
     )
   }
@@ -57,10 +93,18 @@ export default {
     width: 300px;
     border: 1px solid #eeeeee;
     display: flex; align-items: center; justify-content: center;
+    .module {
+      cursor: pointer;
+    }
   }
   .panel-right {
     flex: 1;
     background: #eeeeee;
   }
+}
+.panel-save-btn {
+  margin-top: 30px;
+  width: 100px; height: 30px;
+  text-align: center;
 }
 </style>

@@ -8,6 +8,13 @@ module.exports = {
   },
   devServer: {
     open: true,
-    port: 2000
+    port: 3000,
+    proxy: {
+      '^/admin/': {
+        target: 'http://localhost:3001',
+        changeOrigin: true,
+        ws: false
+      }
+    }
   }
 }

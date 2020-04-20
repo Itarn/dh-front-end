@@ -2,6 +2,8 @@ import * as types from './mutations-type'
 
 import { getVM } from '../utils/element'
 
+import Element from '../components/editor/models/element'
+
 const mutations = {
   /**
    * 设置是否是移动端
@@ -14,7 +16,8 @@ const mutations = {
     if (type === 'add') {
       const vm = getVM(value)
       const props = vm.$options.props
-      elements.push({ name: value, props })
+      const element = new Element({ name: value, props })
+      elements.push(element)
     }
   }
 }

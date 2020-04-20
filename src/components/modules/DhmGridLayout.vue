@@ -1,7 +1,7 @@
 <template>
   <div class="dhm-grid-layout module-wrap" :class="[moduleWideType]">
     <div class="dhm-grid-layout-each-wrap" :class="[numberMapClassName[eachLineNumber]]" v-for="(item, index) in propData" :key="index">
-      <div class="dhm-grid-layout-each"></div>
+      <div class="dhm-grid-layout-each">{{ index + 1 }}</div>
     </div>
   </div>
 </template>
@@ -18,11 +18,11 @@ export default {
     },
     eachLineNumber: {
       type: Number,
-      default: 2
+      default: () => 2
     },
     moduleWideType: {
       type: String,
-      default: 'content-wide' // content-wide, screen-wide
+      default: () => 'content-wide' // content-wide, screen-wide
     }
   },
   data () {
@@ -62,7 +62,8 @@ export default {
   }
 
   & .dhm-grid-layout-each {
-    height: 60px;
+    height: 120px;
+    line-height: 120px;
     border: 1px solid #ff5a05;
   }
 }
