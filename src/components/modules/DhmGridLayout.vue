@@ -7,8 +7,11 @@
 </template>
 
 <script>
-export default {
-  name: 'dhm-grid-layout',
+import { createNamespace } from '../../utils/create'
+
+const [createComponent] = createNamespace('gridLayout')
+
+export default createComponent({
   props: {
     propData: {
       type: Array,
@@ -36,7 +39,7 @@ export default {
       numberMapClassName
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>

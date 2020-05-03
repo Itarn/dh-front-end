@@ -11,11 +11,6 @@ class Element {
     Object.keys(ele.props).map(key => {
       this.moduleProps[key] = ele.props[key].default && typeof ele.props[key].default === 'function' ? lodash.cloneDeep(ele.props[key].default()) : lodash.cloneDeep(ele.props[key].default)
     })
-
-    // this.propsMap = new Map()
-    // Object.keys(this.moduleProps).map(key => {
-    //   this.propsMap.set(key, this.moduleProps[key])
-    // })
   }
 
   getProp (propNme) {
@@ -23,7 +18,6 @@ class Element {
   }
 
   setPropValue (propNme, value) {
-    // this.propsMap.set(propNme, value)
     this.moduleProps[propNme] = lodash.cloneDeep(value)
   }
 }

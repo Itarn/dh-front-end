@@ -24,13 +24,22 @@ export default {
         value: name
       })
     },
+    getPage (id) {
+      editorService.getPageDetail({ id })
+        .then(res => {
+          const modules = JSON.parse(res.modules)
+          modules.map(module => { this.clone({ name: module.name }) })
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
     updatePage () {
       const data = {
         id: this.id,
         modules: JSON.stringify(this.elements)
       }
 
-      console.log(data)
       editorService.updatePage(data)
         .then(res => {
           console.log(res)
@@ -44,16 +53,7 @@ export default {
     ...mapState(['elements'])
   },
   created () {
-    editorService.getPageDetail({ id: this.id })
-      .then(res => {
-        console.log('getPageDetail:::', res)
-        // this.pageInitModule = JSON.parse(res.json)
-        const modules = JSON.parse(res.modules)
-        modules.map(module => { this.clone({ name: module.name }) })
-      })
-      .catch(err => {
-        console.log(err)
-      })
+    this.getPage(this.id)
   },
   render (h) {
     return (
@@ -83,7 +83,7 @@ export default {
     )
   }
 }
-</script>
+</script>>
 
 <style lang="scss" scoped>
 
@@ -107,4 +107,5 @@ export default {
   width: 100px; height: 30px;
   text-align: center;
 }
+
 </style>

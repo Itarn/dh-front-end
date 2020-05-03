@@ -1,0 +1,13 @@
+@import './mixins/responsiveness';
+
+// content container
+$content-width: 1080px;
+
+// editor
+.layout-content {
+  width: $content-width;
+  margin: 0 auto;
+  @include mobile {
+    width: 96vw;
+  }
+}

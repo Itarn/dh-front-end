@@ -1,8 +1,19 @@
+const config = require('./src/config')
+const path = require('path')
+const resolve = (dir) => {
+  return path.join(__dirname, dir)
+}
+
+const prependData = `
+  @import '~@/assets/css/_var';\n
+  $prefix: ${config.PREFIX};\n
+`
+
 module.exports = {
   css: {
     loaderOptions: {
       scss: {
-        prependData: `@import "~@/assets/css/main.scss";`
+        prependData
       }
     }
   },
@@ -16,5 +27,11 @@ module.exports = {
         ws: false
       }
     }
+  },
+  chainWebpack: config => {
+    config
+    config.resolve.alias
+      .set('gkSrc', resolve('node_modules/@geekbang/geek.ui/src'))
+      .set('gkui', resolve('node_modules/@geekbang/geek.ui/components/src'))
   }
 }

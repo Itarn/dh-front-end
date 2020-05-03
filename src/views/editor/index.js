@@ -1,3 +1,3 @@
-import Editor from './Editor'
+import editor from './editor'
 
-export default Editor
+export default editor
