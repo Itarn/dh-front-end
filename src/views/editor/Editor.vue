@@ -58,7 +58,6 @@ export default {
   render (h) {
     return (
       <div>
-        <h5>编辑页面</h5>
         <div class="panel">
           <div class="panel-left">
             {
@@ -90,16 +89,18 @@ export default {
 .panel {
   display: flex; justify-content: space-between;
   .panel-left {
-    width: 300px;
-    border: 1px solid #eeeeee;
+    width: 100px;
+    // border: 1px solid #eeeeee;
     display: flex; align-items: center; justify-content: center;
+    color: #fff;
+    background-color: rgb(46, 46, 47);
     .module {
       cursor: pointer;
     }
   }
   .panel-right {
     flex: 1;
-    background: #eeeeee;
+    // background: #eeeeee;
   }
 }
 .panel-save-btn {

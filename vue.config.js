@@ -7,6 +7,7 @@ const resolve = (dir) => {
 const prependData = `
   @import '~@/assets/css/_var';\n
   $prefix: ${config.PREFIX};\n
+  $BASEPREFIX: ${config.BASEPREFIX};\n
 `
 
 module.exports = {

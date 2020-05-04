@@ -1,11 +1,11 @@
 import Vue from 'vue'
-import DhmGridLayout from '../components/modules/DhmGridLayout'
+import DhLayout from '../components/modules/DhLayout'
 
 export const modulesList = [
   {
     title: '网格布局',
-    component: DhmGridLayout,
-    name: DhmGridLayout.name
+    component: DhLayout,
+    name: DhLayout.name
   }
 ]
 
