@@ -72,7 +72,6 @@ export default {
           </div>
           <div class="panel-right">
             { this.elements && this.elements.map(ele => {
-              console.log(ele.moduleProps)
               return (h(ele.name, { props: { ...ele.moduleProps, uuid: ele.uuid } }))
             }) }
           </div>

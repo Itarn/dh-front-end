@@ -38,6 +38,7 @@ export default createComponent({
     return (
       <div
         class={[
+          bem(),
           bem('top', { [sectionTop]: sectionTop }),
           bem('bottom', { [sectionBottom]: sectionBottom })
         ]}

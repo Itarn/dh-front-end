@@ -17,9 +17,7 @@ const mutations = {
       let { name, props = null } = value
       const vm = getVM(name)
       if (!props) props = vm.$options.props
-      console.log(props)
       const element = new Element({ name, props })
-      console.log(element)
       elements.push(element)
     } else if (type === 'update') {
       const { uuid, propKey, propVal } = value

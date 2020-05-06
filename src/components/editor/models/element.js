@@ -8,7 +8,7 @@ class Element {
 
     // const moduleProps = lodash.cloneDeep(ele.props)
     this.moduleProps = {}
-    Object.keys(ele.props).map(key => {
+    Object.keys(ele.props).filter(key => key !== 'editor').map(key => {
       const defaultVal = ele.props[key].default
 
       if (defaultVal) {

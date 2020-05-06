@@ -159,9 +159,9 @@ export default createComponent({
     const vm = getVM(this.element.name)
     const props = vm.$options.props
 
-    const changeFN = (e) => {
-      this.updateElement({ propKey: 'height', propVal: e.target.value })
-    }
+    // const changeFN = (e) => {
+    //   this.updateElement({ propKey: 'height', propVal: e.target.value })
+    // }
 
     return (
       <DhSection>
@@ -173,13 +173,20 @@ export default createComponent({
 
         <div class="editor-dot">
           <BaseButton color="#000">网格布局</BaseButton>
-          <select onChange={changeFN}>
-            {
-              props.height.editor.prop.map(item => {
-                return <option value={item.value} selected={item.value === this.height}>{item.label}</option>
-              })
-            }
-          </select>
+          {
+            Object.keys(props).forEach(key => {
+              const prop = props[key]
+              if (prop.editor) {
+                return (<span>{prop.label}</span>
+                  prop.editor.prop.map(item => (
+                    <select onChange={() => changeFN()}>
+                      <option value={item.value} selected={item.value === this.height}>{item.label}</option>
+                    </select>
+                  ))
+                )
+              }
+            })
+          }
         </div>
       </DhSection>
     )
