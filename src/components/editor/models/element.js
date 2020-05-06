@@ -9,7 +9,17 @@ class Element {
     // const moduleProps = lodash.cloneDeep(ele.props)
     this.moduleProps = {}
     Object.keys(ele.props).map(key => {
-      this.moduleProps[key] = ele.props[key].default && typeof ele.props[key].default === 'function' ? lodash.cloneDeep(ele.props[key].default()) : lodash.cloneDeep(ele.props[key].default)
+      const defaultVal = ele.props[key].default
+
+      if (defaultVal) {
+        if (typeof defaultVal === 'function') {
+          this.moduleProps[key] = defaultVal.default()
+        } else {
+          this.moduleProps[key] = defaultVal
+        }
+      } else {
+        this.moduleProps[key] = ele.props[key]
+      }
     })
   }
 

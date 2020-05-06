@@ -1,4 +1,5 @@
 import { isFunction } from '../../utils'
+import { SlotsMixin } from '../../mixins/slots'
 
 function install (componentOptions, Vue) {
   const { name } = componentOptions
@@ -37,6 +38,11 @@ export function createComponent (name) {
 
     sfc.name = name
     sfc.install = install
+
+    if (!sfc.functional) {
+      sfc.mixins = sfc.mixins || []
+      sfc.mixins.push(SlotsMixin)
+    }
 
     return sfc
   }

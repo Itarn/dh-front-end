@@ -39,7 +39,6 @@ function button (h, props, slots, ctx) {
     let text
     // console.log(slots.default.toString())
     text = slots.default ? slots.default() : text
-    console.dir(text)
 
     if (text) {
       content.push(<span class={bem('text')}>{text}</span>)

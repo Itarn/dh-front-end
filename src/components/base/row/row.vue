@@ -50,7 +50,7 @@ export default createComponent({
         })}
         onClick={this.onClick}
       >
-        {this.$slots.default}
+        {this.slots()}
       </this.tag>
     )
   }
@@ -59,12 +59,12 @@ export default createComponent({
 
 <style scoped lang="scss">
 
-.#{$BASEPREFIX}-row {
+.#{$BASE}-row {
   display: flex;
-  margin: calc(-1 * var(--#{$BASEPREFIX}-gutter));
+  margin: calc(-1 * var(--#{$BASE}-gutter));
 
   &:not(:last-child) {
-    margin-bottom: calc(var(--#{$BASEPREFIX}-gutter));
+    margin-bottom: calc(var(--#{$BASE}-gutter));
   }
 
   &--justify-center {

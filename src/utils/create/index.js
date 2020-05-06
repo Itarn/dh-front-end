@@ -1,14 +1,14 @@
 import { createComponent } from './component'
 import { createBEM } from './bem'
 
-const config = require('../../config')
+import { PREFIX, BASE } from '../../assets/css/_var'
 
 export function createNamespace (name, type) {
   if (type === 'base') {
-    name = `${config.BASEPREFIX}-${name}`
+    name = `${BASE}-${name}`
     return [createComponent(name), createBEM(name)]
   } else {
-    name = `${config.PREFIX}-${name}`
+    name = `${PREFIX}-${name}`
     return [createComponent(name), createBEM(name)]
   }
 }

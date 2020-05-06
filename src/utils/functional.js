@@ -25,8 +25,6 @@ export function inherit (context, inheritListeners) {
     Object.assign(result.on, context.data.on)
   }
 
-  console.log('result', result)
-
   return result
 }
 

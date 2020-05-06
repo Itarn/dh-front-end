@@ -8,7 +8,11 @@ export default createComponent({
       type: String,
       default: 'div'
     },
-    num: {
+    ratioNum: {
+      type: [String, Number],
+      default: 0
+    },
+    blockNum: {
       type: [String, Number],
       default: 0
     }
@@ -28,15 +32,16 @@ export default createComponent({
     }
   },
   render () {
-    const { num } = this
+    const { ratioNum, blockNum } = this
     return (
       <this.tag
         class={bem({
-          [`is-${num}`]: num
+          [`is-one-of-${ratioNum}`]: ratioNum,
+          [`is-${blockNum}`]: blockNum
         })}
         onClick={this.onClick}
       >
-        {this.$slots.default}
+        {this.slots()}
       </this.tag>
     )
   }
@@ -45,14 +50,21 @@ export default createComponent({
 
 <style lang="scss" scoped>
 
-.#{$BASEPREFIX}-col {
-  padding: var(--#{$BASEPREFIX}-gutter);
+.#{$BASE}-col {
+  padding: var(--#{$BASE}-gutter);
   flex: 1;
+
+  @for $i from 1 through 12 {
+    &--is-one-of-#{$i} {
+      flex: none;
+      width: 100% / $i;
+    }
+  }
 
   @for $i from 1 through 12 {
     &--is-#{$i} {
       flex: none;
-      width: $i / 12 * 100%;
+      width: (100% * $i / 12);
     }
   }
 }

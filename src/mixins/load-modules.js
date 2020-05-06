@@ -3,9 +3,9 @@ import DhLayout from '../components/modules/DhLayout'
 
 export const modulesList = [
   {
-    title: '网格布局',
-    component: DhLayout,
-    name: DhLayout.name
+    title: DhLayout.title,
+    name: DhLayout.name,
+    component: DhLayout
   }
 ]
 

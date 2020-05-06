@@ -74,7 +74,7 @@ export default {
 <style lang="scss" scoped >
 @import '../../assets/css/_var.scss';
 
-.#{$prefix}-myboard {
+.#{$PREFIX}-myboard {
 
   &__header {
     background-color: $purple;

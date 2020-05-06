@@ -18,17 +18,17 @@ export default {
   mixins: [loadModulesMixin],
   methods: {
     ...mapActions(['elementManager']),
-    clone ({ name }) {
+    clone (value) {
       this.elementManager({
         type: 'add',
-        value: name
+        value
       })
     },
     getPage (id) {
       editorService.getPageDetail({ id })
         .then(res => {
-          const modules = JSON.parse(res.modules)
-          modules.map(module => { this.clone({ name: module.name }) })
+          const modules = JSON.parse(res.modules) || []
+          modules.map(each => { this.clone({ name: each.name, props: each.moduleProps }) })
         })
         .catch(err => {
           console.log(err)
@@ -71,8 +71,9 @@ export default {
             }
           </div>
           <div class="panel-right">
-            { this.elements.map(ele => {
-              return (h(ele.name, { props: { ...ele.moduleProps } }))
+            { this.elements && this.elements.map(ele => {
+              console.log(ele.moduleProps)
+              return (h(ele.name, { props: { ...ele.moduleProps, uuid: ele.uuid } }))
             }) }
           </div>
 

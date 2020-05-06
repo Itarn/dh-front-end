@@ -14,10 +14,22 @@ const mutations = {
   [types.SET_ELEMENTS] (state, { type, value }) {
     const { elements } = state
     if (type === 'add') {
-      const vm = getVM(value)
-      const props = vm.$options.props
-      const element = new Element({ name: value, props })
+      let { name, props = null } = value
+      const vm = getVM(name)
+      if (!props) props = vm.$options.props
+      console.log(props)
+      const element = new Element({ name, props })
+      console.log(element)
       elements.push(element)
+    } else if (type === 'update') {
+      const { uuid, propKey, propVal } = value
+      const ele = elements.find(ele => ele.uuid === uuid)
+      if (!ele) console.warn('store 中未找到要编辑的组件')
+      ele.setPropValue(propKey, propVal)
+    } else if (type === 'delete') {
+      const { uuid } = value
+      const index = elements.findIndex(ele => ele.uuid === uuid)
+      if (index !== -1) elements.splice(index, 1)
     }
   }
 }
