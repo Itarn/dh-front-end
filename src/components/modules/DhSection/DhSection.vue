@@ -44,6 +44,9 @@ export default createComponent({
         ]}
       >
         { this.slots() }
+        <div class={ [bem('editor-slot')] }>
+          { this.slots('editor') }
+        </div>
       </div>
     )
   }
@@ -79,10 +82,8 @@ export default createComponent({
     }
   }
 
-  &__editor-dot {
-    position: absolute; right: 0;
-    background: $black;
-    color: $white;
+  &__editor-slot {
+    position: absolute; right: 10px; top: 10px;
   }
 }
 </style>

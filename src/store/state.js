@@ -5,7 +5,9 @@ const state = {
   // isMobile: /iphone|android|ucweb|ucbrowser|nokia|sony|ericsson|mot|samsung|sgh|lg|philips|panasonic|alcatel|lenovo|cldc|midp|wap|mobile/i.test(navigator.userAgent.toLowerCase()),
   isMobile: null,
 
-  elements: []
+  elements: [],
+
+  status: 'editing' // peview prod
 }
 
 export default state

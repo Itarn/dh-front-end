@@ -1,3 +1,3 @@
-import DhLayout from './DhLayout-tem'
+import DhLayout from './DhLayout'
 
 export default DhLayout

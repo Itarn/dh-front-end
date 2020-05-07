@@ -3,7 +3,7 @@ import DhLayout from '../components/modules/DhLayout'
 
 export const modulesList = [
   {
-    title: DhLayout.title,
+    label: DhLayout.label,
     name: DhLayout.name,
     component: DhLayout
   }

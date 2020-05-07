@@ -1,3 +1,24 @@
+<template>
+  <div>
+    <div class="panel">
+
+      <div class="panel-left" v-if="status === 'editing'">
+        <div class="module" @click="clone(eachModule)" v-for="eachModule in modulesList" :key="eachModule.uuid">
+          {{ eachModule.label }}
+        </div>
+      </div>
+
+      <div class="panel-right">
+        <component :is="curComponent(element)" v-for="element in elements" :key="element.uuid"></component>
+      </div>
+
+    </div>
+
+    <button class="panel-save-btn" @click="updatePage">保存</button>
+
+  </div>
+</template>
+
 <script>
 import loadModulesMixin from '../../mixins/load-modules'
 import { mapActions, mapState } from 'vuex'
@@ -10,12 +31,13 @@ export default {
       type: String
     }
   },
+
   data () {
-    return {
-      pageInitModule: []
-    }
+    return {}
   },
+
   mixins: [loadModulesMixin],
+
   methods: {
     ...mapActions(['elementManager']),
     clone (value) {
@@ -42,53 +64,37 @@ export default {
 
       editorService.updatePage(data)
         .then(res => {
-          console.log(res)
+          alert('保存成功')
         })
         .catch(err => {
           console.log(err)
         })
+    },
+    curComponent (ele) {
+      return {
+        render (h) {
+          return h(ele.name, { props: { ...ele.moduleProps, uuid: ele.uuid } })
+        }
+      }
     }
   },
+
   computed: {
-    ...mapState(['elements'])
+    ...mapState(['elements', 'status'])
   },
+
   created () {
     this.getPage(this.id)
-  },
-  render (h) {
-    return (
-      <div>
-        <div class="panel">
-          <div class="panel-left">
-            {
-              this.modulesList.map(eachModule => {
-                return (
-                  <div class="module" onClick={this.clone.bind(this, eachModule)}>
-                    { eachModule.title }
-                  </div>
-                )
-              })
-            }
-          </div>
-          <div class="panel-right">
-            { this.elements && this.elements.map(ele => {
-              return (h(ele.name, { props: { ...ele.moduleProps, uuid: ele.uuid } }))
-            }) }
-          </div>
-
-        </div>
-        <button class="panel-save-btn" onClick={this.updatePage}>保存</button>
-      </div>
-    )
   }
 }
-</script>>
+</script>
 
 <style lang="scss" scoped>
 
 .panel {
   display: flex; justify-content: space-between;
-  .panel-left {
+
+  &-left {
     width: 100px;
     // border: 1px solid #eeeeee;
     display: flex; align-items: center; justify-content: center;
@@ -98,15 +104,18 @@ export default {
       cursor: pointer;
     }
   }
-  .panel-right {
+
+  &-right {
     flex: 1;
     // background: #eeeeee;
   }
-}
-.panel-save-btn {
-  margin-top: 30px;
-  width: 100px; height: 30px;
-  text-align: center;
+
+  &-save-btn {
+    margin-top: 30px;
+    width: 100px; height: 30px;
+    text-align: center;
+  }
+
 }
 
 </style>
