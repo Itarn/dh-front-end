@@ -1,7 +1,3 @@
-// prefix
-$PREFIX: 'dh';
-$BASE: 'base';
-
 // Color Palette
 $black: #000;
 $white: #fff;
@@ -13,6 +9,7 @@ $gray-5: #c8c9cc;
 $gray-6: #969799;
 $gray-7: #646566;
 $gray-8: #323233;
+$gray-9: #2f2f2f;
 $red: #ee0a24;
 $blue: #1989fa;
 $orange: #ff976a;
@@ -109,7 +106,7 @@ $button-warning-color: $white;
 $button-warning-background-color: $orange;
 $button-warning-border-color: $orange;
 $button-border-width: $border-width-base;
-$button-border-radius: $border-radius-sm;
+$button-border-radius: $border-radius-md;
 $button-round-border-radius: $border-radius-max;
 $button-plain-background-color: $white;
 $button-disabled-opacity: $disabled-opacity;

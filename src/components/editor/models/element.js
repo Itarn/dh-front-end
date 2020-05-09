@@ -1,19 +1,19 @@
 import { getUUID } from '../../../utils/element'
-import lodash from 'lodash'
+import clonedeep from 'lodash.clonedeep'
 
 class Element {
   constructor (ele) {
     this.name = ele.name
     this.uuid = getUUID()
 
-    // const moduleProps = lodash.cloneDeep(ele.props)
+    // const moduleProps = clonedeep(ele.props)
     this.moduleProps = {}
     Object.keys(ele.props).filter(key => key !== 'editor').map(key => {
       const defaultVal = ele.props[key].default
 
       if (defaultVal) {
         if (typeof defaultVal === 'function') {
-          this.moduleProps[key] = defaultVal.default()
+          this.moduleProps[key] = defaultVal()
         } else {
           this.moduleProps[key] = defaultVal
         }
@@ -28,7 +28,7 @@ class Element {
   }
 
   setPropValue (propNme, value) {
-    this.moduleProps[propNme] = lodash.cloneDeep(value)
+    this.moduleProps[propNme] = clonedeep(value)
   }
 }
 

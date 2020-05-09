@@ -6,6 +6,8 @@
 
 <style lang="scss">
 @import './assets/css';
+@import './assets/css/iconfont';
+@import './assets/css/anamation';
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

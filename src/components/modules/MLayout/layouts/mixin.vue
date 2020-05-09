@@ -3,13 +3,22 @@ import { createNamespace } from '../../../../utils/create'
 
 import BaseRow from '../../../base/row'
 import BaseCol from '../../../base/col'
+import BaseButton from '../../../base/button'
 
-const [, bem] = createNamespace('layout')
+import EditorCell from '../../../editor/panels/cell'
+import EditorControl from '../../../editor/panels/control'
+import EditorAttr from '../../../editor/panels/attr'
+
+const [, bem] = createNamespace('m', 'layout')
 
 export default {
   components: {
     BaseRow,
-    BaseCol
+    BaseCol,
+    BaseButton,
+    EditorCell,
+    EditorControl,
+    EditorAttr
   },
   methods: {
     bem (...arg) { return bem(...arg) }
@@ -19,11 +28,13 @@ export default {
 
 <style scoped lang="scss">
 
-.#{$PREFIX}-layout {
+.m-layout {
 
   &__col {
     width: 100%; height: 100%;
-    border: 1px solid #ccc;
+    position: relative;
+
+    background-size: cover;
 
     &--min-height {
       height: 165px;

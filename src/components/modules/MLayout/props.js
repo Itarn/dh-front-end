@@ -1,7 +1,46 @@
+import { RelativeFn } from '@/utils/modules'
+
+// default info
+const row = 2
+const col = 3
+const dataShape = {
+  img: 'https://static001-test.geekbang.org/resource/image/50/b5/505458a8ba12dd2a2d9410e68627a2b5.jpg',
+  link: 'https://www.geekbang.org',
+  title: '我是标题',
+  subTitle: '我是副标题'
+}
+
+// relative logic
+// arguments name should be prop name
+let rowColActedData = {
+  key: 'data',
+  cb (row, col, data) {
+    let newLength = Number(row) * Number(col)
+    if (newLength > data.length) {
+      data = [].concat(data, Array.from({ length: newLength - data.length }, v => (dataShape)))
+    } else if (newLength < data.length) {
+      let confirm = window.confirm('您确定要减少网格数量吗？某些网格项目将被删除。')
+
+      if (confirm) {
+        data = data.splice(newLength, data.length - newLength)
+      }
+    }
+
+    return data
+  }
+}
+
 export default {
   uuid: {
     type: String,
     default: ''
+  },
+  data: {
+    type: Array,
+    default: () => {
+      let arr = Array.from({ length: col * row }, v => (dataShape))
+      return arr
+    }
   },
   layoutType: {
     type: String,
@@ -17,15 +56,18 @@ export default {
   },
   row: {
     type: [String, Number],
-    default: 2,
+    default: row,
     editor: {
       type: 'e-input',
-      label: '行数'
+      label: '行数',
+      relative: [
+        new RelativeFn(rowColActedData)
+      ]
     }
   },
   col: {
     type: [String, Number],
-    default: 3,
+    default: col,
     editor: {
       type: 'e-input',
       label: '列数'

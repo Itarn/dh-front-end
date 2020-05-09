@@ -32,5 +32,9 @@ module.exports = {
     config.resolve.alias
       .set('gkSrc', resolve('node_modules/@geekbang/geek.ui/src'))
       .set('gkui', resolve('node_modules/@geekbang/geek.ui/components/src'))
+
+      .set('b', resolve('./src/components/base'))
+      .set('e', resolve('./src/components/editor'))
+      .set('m', resolve('./src/components/modules'))
   }
 }

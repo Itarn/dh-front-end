@@ -1,24 +1,24 @@
 <template>
-  <DhSection>
+  <MSection>
     <div :class="[{ 'layout-content': wideType === 'content' }]">
       <component :is="curLayout"></component>
     </div>
 
     <div slot="editor">
-      <BaseButton color="#000">网格布局</BaseButton>
+      <BaseButton class="fs13 h27 plr40" color="#000">网格布局</BaseButton>
       <div v-for="prop in editorProps" :key="prop.key">
         <span>{{ prop.info.label }}</span>
         <template v-if="prop.info.type === 'e-select'">
-          <select @change="changeFN($event, prop.key)">
+          <select @change="changeFN($event, { key: prop.key })">
             <option :value="each.value" :selected="each.value === prop.val" v-for="each in prop.info.propArr" :key="each.label">{{ each.label }}</option>
           </select>
         </template>
         <template v-if="prop.info.type === 'e-input'">
-          <input type="text" :value="prop.val" @input="changeFN($event, prop.key)">
+          <input type="text" :value="prop.val" @input="changeFN($event, { key: prop.key, relative: prop.info.relative })">
         </template>
       </div>
     </div>
-  </DhSection>
+  </MSection>
 </template>
 
 <script>
@@ -26,18 +26,18 @@ import { getVM } from '../../../utils/element'
 import { mapState, mapActions } from 'vuex'
 
 import BaseButton from '../../base/button'
-import DhSection from '../DhSection'
+import MSection from '../MSection'
 
 import props from './props'
 import { layouts } from './layouts'
 
 export default {
-  name: 'dh-layout',
+  name: 'm-layout',
   label: '网格',
 
   components: {
     BaseButton,
-    DhSection
+    MSection
   },
 
   props,
@@ -96,8 +96,17 @@ export default {
         }
       })
     },
-    changeFN (e, propKey) {
-      this.updateElement({ propKey, propVal: e.target.value })
+    changeFN (e, { key, relative = null }) {
+      const propVal = e.target.value
+      this.updateElement({ propKey: key, propVal })
+
+      if (relative) {
+        relative.forEach(r => {
+          const { key: rkey, cb = null } = r
+
+          if (key && cb) this.updateElement({ propKey: rkey, propVal: cb({ key, val: propVal, ctx: this }) })
+        })
+      }
     }
   }
 }

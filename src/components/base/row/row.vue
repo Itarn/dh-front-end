@@ -1,7 +1,7 @@
 <script>
 import { createNamespace } from '../../../utils/create'
 
-const [createComponent, bem] = createNamespace('row', 'base')
+const [createComponent, bem] = createNamespace('base', 'row')
 
 export default createComponent({
   props: {
@@ -59,12 +59,12 @@ export default createComponent({
 
 <style scoped lang="scss">
 
-.#{$BASE}-row {
+.base-row {
   display: flex;
-  margin: calc(-1 * var(--#{$BASE}-gutter));
+  margin: calc(-1 * var(--base-gutter));
 
   &:not(:last-child) {
-    margin-bottom: calc(var(--#{$BASE}-gutter));
+    margin-bottom: calc(var(--base-gutter));
   }
 
   &--justify-center {

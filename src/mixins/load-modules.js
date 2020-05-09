@@ -1,11 +1,11 @@
 import Vue from 'vue'
-import DhLayout from '../components/modules/DhLayout'
+import MLayout from '../components/modules/MLayout'
 
 export const modulesList = [
   {
-    label: DhLayout.label,
-    name: DhLayout.name,
-    component: DhLayout
+    label: MLayout.label,
+    name: MLayout.name,
+    component: MLayout
   }
 ]
 

@@ -1,6 +1,6 @@
 <script>
 import { createNamespace } from '../../../utils/create'
-const [createComponent, bem] = createNamespace('col', 'base')
+const [createComponent, bem] = createNamespace('base', 'col')
 
 export default createComponent({
   props: {
@@ -50,8 +50,8 @@ export default createComponent({
 
 <style lang="scss" scoped>
 
-.#{$BASE}-col {
-  padding: var(--#{$BASE}-gutter);
+.base-col {
+  padding: var(--base-gutter);
   flex: 1;
 
   @for $i from 1 through 12 {

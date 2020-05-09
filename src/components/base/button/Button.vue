@@ -1,8 +1,9 @@
 <script>
-import { createNamespace } from '../../../utils'
-import { WHITE } from '../../../assets/css/_var'
-import { emit, inherit } from '../../../utils/functional'
-const [createComponent, bem] = createNamespace('button', 'base')
+import { createNamespace } from '@/utils'
+import { WHITE } from '@/assets/css/_var'
+import { emit, inherit } from '@/utils/functional'
+
+const [createComponent, bem] = createNamespace('base', 'button')
 
 function button (h, props, slots, ctx) {
   const {
@@ -11,7 +12,8 @@ function button (h, props, slots, ctx) {
     type,
     color,
     plain,
-    block
+    block,
+    custom
   } = props
 
   const classes = [
@@ -19,7 +21,8 @@ function button (h, props, slots, ctx) {
       type,
       size,
       {
-        block
+        block,
+        custom
       }
     ])
   ]
@@ -31,6 +34,12 @@ function button (h, props, slots, ctx) {
     if (!plain) {
       style.background = color
     }
+  }
+
+  if (custom) {
+    Object.keys(custom).map(key => (
+      style[key] = custom[key]
+    ))
   }
 
   function Content () {
@@ -79,7 +88,11 @@ button.props = {
     type: String,
     default: 'normal'
   },
-  plain: Boolean
+  plain: Boolean,
+  custom: {
+    type: [Boolean, Object],
+    default: false
+  }
 }
 
 export default createComponent(button)
@@ -94,7 +107,7 @@ export default createComponent(button)
   margin: 0;
   padding: 0;
   font-size: $button-default-font-size;
-  line-height: $button-default-line-height;
+  // line-height: $button-default-line-height;
   text-align: center;
   border-radius: $button-border-radius;
   cursor: pointer;
@@ -130,6 +143,13 @@ export default createComponent(button)
     color: $button-warning-color;
     background-color: $button-warning-background-color;
     border: $button-border-width solid $button-warning-border-color;
+  }
+
+  &--editing {
+    color: $white;
+    background-color: $gray-9;
+    // border: 1px solid $button-warning-border-color;
+    border-radius: 4px;
   }
 
   &--plain {
@@ -175,6 +195,52 @@ export default createComponent(button)
     display: block;
     width: 100%;
   }
+
+  // 提供更细粒度的控制
+
+  // &--custom {
+  //   font-size: var(--fs);
+  //   height: var(--h);
+  //   padding: var(--p);
+  //   padding-left: var(--pl, --plr);
+  //   padding-right: var(--pr, --plr);
+  //   padding-top: var(--ptb, --pt);
+  //   padding-bottom: var(--ptb, --pb);
+  //   margin: var(--m);
+  //   margin-left: var(--ml, --mlr);
+  //   margin-right: var(--mr, --mlr);
+  //   margin-top: var(--mt, --mtb);
+  //   margin-bottom: var(--mt, --mtb);
+  // }
+
+  // // font-size
+  // @for $i from 12 through 20 {
+  //   &.fs#{$i} {
+  //     font-size: $i + px;
+  //   }
+  // }
+
+  // // height
+  // @for $i from 12 through 43 {
+  //   &.h#{$i} {
+  //     height: $i + px;
+  //   }
+  // }
+
+  // // padding
+  // @for $i from 0 through 40 {
+  //   &.pl#{$i} {
+  //     padding-left: $i + px;
+  //   }
+  //   &.pr#{$i} {
+  //     padding-right: $i + px;
+  //   }
+  //   &.plr#{$i} {
+  //     padding-left: $i + px;
+  //     padding-right: $i + px;
+  //   }
+  // }
+
 }
 
 </style>

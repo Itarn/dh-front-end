@@ -3,7 +3,7 @@ import editorService from '../../service/editor.service'
 import { createNamespace } from '../../utils'
 import baseButton from '../../components/base/button'
 
-const [, bem] = createNamespace('myboard')
+const [, bem] = createNamespace('dh', 'myboard')
 
 export default {
   data () {
@@ -74,7 +74,7 @@ export default {
 <style lang="scss" scoped >
 @import '../../assets/css/_var.scss';
 
-.#{$PREFIX}-myboard {
+.dh-myboard {
 
   &__header {
     background-color: $purple;

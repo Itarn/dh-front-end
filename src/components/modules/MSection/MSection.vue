@@ -1,7 +1,7 @@
 <script>
 import { createNamespace } from '../../../utils/create'
 
-const [createComponent, bem] = createNamespace('section')
+const [createComponent, bem] = createNamespace('m', 'section')
 
 export default createComponent({
   props: {
@@ -55,7 +55,7 @@ export default createComponent({
 
 <style lang="scss" scoped>
 
-.#{$PREFIX}-section {
+.m-section {
   position: relative;
 
   &__top {
