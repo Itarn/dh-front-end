@@ -1,5 +1,5 @@
 <script>
-import { createNamespace } from '../../../utils/create'
+import { createNamespace } from '@/utils/create'
 
 const [createComponent, bem] = createNamespace('base', 'row')
 

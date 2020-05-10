@@ -1,5 +1,6 @@
 <script>
 import { createNamespace } from '../../../utils/create'
+
 const [createComponent, bem] = createNamespace('base', 'col')
 
 export default createComponent({

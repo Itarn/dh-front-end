@@ -1,34 +1,39 @@
 <template>
   <div>
-    <base-button type="editing" :custom="btnStyle">
+    <!-- <base-button type="editing" :custom="btnStyle">
       <BaseIcon type="arrow" :custom="{ fontSize: '12px' }" />  背景与链接
-    </base-button>
+    </base-button> -->
 
-    <editor-attr></editor-attr>
+    <slot name="button" :editorCustomBtnStyle="editorCustomBtnStyle" />
+
+    <slot name="attr" />
   </div>
 </template>
 
 <script>
-import BaseButton from 'b/button'
-import BaseIcon from 'b/icon'
-import EditorAttr from 'e/panels/attr'
+// import BaseButton from 'b/button'
+// import BaseIcon from 'b/icon'
+// import EditorAttr from 'e/panels/attr'
 
 export default {
   data () {
     return {
-      btnStyle: {
-        fontSize: '12px',
-        height: '25px',
-        paddingLeft: '15px',
-        paddingRight: '15px'
+      editorCustomBtnStyle: {
+        type: 'editing',
+        custom: {
+          fontSize: '12px',
+          height: '25px',
+          paddingLeft: '15px',
+          paddingRight: '15px'
+        }
       }
     }
   },
   props: {},
   components: {
-    BaseButton,
-    BaseIcon,
-    EditorAttr
+    // BaseButton,
+    // BaseIcon,
+    // EditorAttr
   }
 }
 </script>

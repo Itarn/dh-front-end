@@ -4,6 +4,7 @@ import { RelativeFn } from '@/utils/modules'
 const row = 2
 const col = 3
 const dataShape = {
+  sid: null,
   img: 'https://static001-test.geekbang.org/resource/image/50/b5/505458a8ba12dd2a2d9410e68627a2b5.jpg',
   link: 'https://www.geekbang.org',
   title: '我是标题',
@@ -15,7 +16,10 @@ const dataShape = {
 // common fn
 function actedUponData (newLength, data) {
   if (newLength > data.length) {
-    data = [].concat(data, Array.from({ length: newLength - data.length }, v => (dataShape)))
+    data = [].concat(data, Array.from({ length: newLength - data.length }, (v, i) => {
+      // dataShape.sid = data.length + i
+      return dataShape
+    }))
   } else if (newLength < data.length) {
     let confirm = window.confirm('您确定要减少网格数量吗？某些网格项目将被删除。')
 
@@ -30,7 +34,7 @@ function actedUponData (newLength, data) {
 let rowColActedData = {
   key: 'data',
   cb (row, col, data) {
-    actedUponData(Number(row) * Number(col), data)
+    return actedUponData(Number(row) * Number(col), data)
   }
 }
 
@@ -38,6 +42,7 @@ let layoutTypeActedData = {
   key: 'data',
   cb (curLayout, data) {
     if (curLayout.needDataLength) actedUponData(curLayout.needDataLength, data)
+    return data
   }
 }
 
@@ -49,7 +54,10 @@ export default {
   data: {
     type: Array,
     default: () => {
-      let arr = Array.from({ length: col * row }, v => (dataShape))
+      let arr = Array.from({ length: col * row }, (v, i) => {
+        // dataShape.sid = i
+        return dataShape
+      })
       return arr
     }
   },

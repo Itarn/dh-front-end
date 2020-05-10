@@ -4,31 +4,36 @@
       <component :is="curLayout"></component>
     </div>
 
-    <div slot="editor">
-      <BaseButton class="fs13 h27 plr40" color="#000">网格布局</BaseButton>
-      <div v-for="prop in editorProps" :key="prop.key">
-        <span>{{ prop.info.label }}</span>
-        <template v-if="prop.info.type === 'e-select'">
-          <select @change="changeFN($event, { key: prop.key, relative: prop.info.relative })">
-            <option :value="each.value" :selected="each.value === prop.val" v-for="each in prop.info.propArr" :key="each.label">{{ each.label }}</option>
-          </select>
-        </template>
-        <template v-if="prop.info.type === 'e-input'">
-          <input type="text" :value="prop.val" @input="changeFN($event, { key: prop.key, relative: prop.info.relative })">
-        </template>
+    <template slot="editor">
+      <div v-for="editorProp in editorPropsPanels" :key="editorProp.id">
+        <EditorControl>
+          <template v-slot:button="{ editorCustomBtnStyle }">
+            <BaseButton :type="editorCustomBtnStyle.type" :custom="editorCustomBtnStyle.custom">{{ editorProp.label }}</BaseButton>
+          </template>
+
+          <template slot="attr">
+            <div v-for="prop in editorProp.attrProp" :key="prop.key">
+              <editor-attr :data="prop.info" @input="inputHandler($event, { key: prop.key, relative: prop.info.relative })"></editor-attr>
+            </div>
+          </template>
+        </EditorControl>
       </div>
-    </div>
+    </template>
   </MSection>
 </template>
 
 <script>
-import { getVM } from '../../../utils/element'
+import { getVM } from '@/utils/element'
 import { mapState, mapActions } from 'vuex'
 
-import BaseButton from '../../base/button'
-import MSection from '../MSection'
+import BaseButton from 'b/button'
+import MSection from 'm/MSection'
+
+import EditorControl from 'e/panels/control'
+import EditorAttr from 'e/panels/attr'
 
 import props from './props'
+import { MEditor } from './editor'
 import { layouts } from './layouts'
 
 export default {
@@ -37,7 +42,9 @@ export default {
 
   components: {
     BaseButton,
-    MSection
+    MSection,
+    EditorControl,
+    EditorAttr
   },
 
   props,
@@ -51,15 +58,22 @@ export default {
     /**
      * {
      *   key: "height",
-     *   val: "middle",
-     *   info: { label: '高度', type: 'editor-selec', propArr: [{ label: "小", value: "min" }] }
+     *   info: { label: '高度', type: 'editor-selec', val: "middle", propArr: [{ label: "小", value: "min" }] }
      * }
      */
-    editorProps () {
+    editorPropsPanels () {
       const vm = getVM(this.element.name)
       const props = vm.$options.props
 
-      return Object.keys(props).filter(key => Object.prototype.hasOwnProperty.call(props[key], 'editor')).map(key => ({ key, info: props[key].editor, val: this[key] }))
+      // return Object.keys(props)
+      //   .filter(key => Object.prototype.hasOwnProperty.call(props[key], 'editor'))
+      //   .map(key => ({ key, val: this[key], info: props[key].editor }))
+
+      MEditor.forEach(item => {
+        this.$set(item, 'attrProp', item.propSortList.map(key => ({ key, info: { ...props[key].editor, val: this[key] } })))
+      })
+
+      return MEditor
     },
     curLayout () {
       const layout = layouts.filter(l => l.name === this.layoutType)[0]
@@ -97,15 +111,15 @@ export default {
         }
       })
     },
-    changeFN (e, { key, relative = null }) {
+    inputHandler (e, { key, relative = null }) {
       const propVal = e.target.value
       this.updateElement({ propKey: key, propVal })
 
+      console.log(e, key, relative)
       if (relative) {
         this.$nextTick(() => {
           relative.forEach(r => {
             const { key: rkey, cb = null } = r
-
             if (key && cb) this.updateElement({ propKey: rkey, propVal: cb({ key, val: propVal, ctx: this }) })
           })
         })

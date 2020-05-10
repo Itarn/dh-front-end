@@ -84,6 +84,7 @@ export default createComponent({
 
   &__editor-slot {
     position: absolute; right: 10px; top: 10px;
+    display: flex; flex-wrap: wrap;
   }
 }
 </style>
