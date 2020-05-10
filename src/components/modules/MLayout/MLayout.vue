@@ -9,7 +9,7 @@
       <div v-for="prop in editorProps" :key="prop.key">
         <span>{{ prop.info.label }}</span>
         <template v-if="prop.info.type === 'e-select'">
-          <select @change="changeFN($event, { key: prop.key })">
+          <select @change="changeFN($event, { key: prop.key, relative: prop.info.relative })">
             <option :value="each.value" :selected="each.value === prop.val" v-for="each in prop.info.propArr" :key="each.label">{{ each.label }}</option>
           </select>
         </template>
@@ -70,6 +70,7 @@ export default {
 
       return {
         name: layout.name,
+        needDataLength: layout.needDataLength || null,
         render (h) {
           return h(layout, { props: { ...data } })
         }
@@ -101,10 +102,12 @@ export default {
       this.updateElement({ propKey: key, propVal })
 
       if (relative) {
-        relative.forEach(r => {
-          const { key: rkey, cb = null } = r
+        this.$nextTick(() => {
+          relative.forEach(r => {
+            const { key: rkey, cb = null } = r
 
-          if (key && cb) this.updateElement({ propKey: rkey, propVal: cb({ key, val: propVal, ctx: this }) })
+            if (key && cb) this.updateElement({ propKey: rkey, propVal: cb({ key, val: propVal, ctx: this }) })
+          })
         })
       }
     }

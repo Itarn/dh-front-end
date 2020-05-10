@@ -1,9 +1,9 @@
 <template>
   <BaseRow :gutter="gutterVal">
     <BaseCol :ratioNum="col" v-for="(val, index) in data" :key="index">
-      <div
-      :class="[bem('col', { [`${height}-height`]: height })]"
-      :style="{ backgroundImage: `url(${val.img})` }"
+      <Column
+      :height="height"
+      :img="val.img"
       >
         <editor-cell :button="['druggle']">
         <!-- <editor-cell> -->
@@ -14,7 +14,7 @@
             </editor-control>
           </div>
         </editor-cell>
-      </div>
+      </Column>
     </BaseCol>
   </BaseRow>
 </template>

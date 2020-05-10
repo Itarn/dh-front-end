@@ -7,26 +7,37 @@ const dataShape = {
   img: 'https://static001-test.geekbang.org/resource/image/50/b5/505458a8ba12dd2a2d9410e68627a2b5.jpg',
   link: 'https://www.geekbang.org',
   title: '我是标题',
-  subTitle: '我是副标题'
+  subTitle: '我是副标题',
+  type: 'default'
 }
 
 // relative logic
-// arguments name should be prop name
+// common fn
+function actedUponData (newLength, data) {
+  if (newLength > data.length) {
+    data = [].concat(data, Array.from({ length: newLength - data.length }, v => (dataShape)))
+  } else if (newLength < data.length) {
+    let confirm = window.confirm('您确定要减少网格数量吗？某些网格项目将被删除。')
+
+    if (confirm) {
+      data.splice(newLength, data.length - newLength)
+    }
+  }
+
+  return data
+}
+// arguments name should be MLayout data
 let rowColActedData = {
   key: 'data',
   cb (row, col, data) {
-    let newLength = Number(row) * Number(col)
-    if (newLength > data.length) {
-      data = [].concat(data, Array.from({ length: newLength - data.length }, v => (dataShape)))
-    } else if (newLength < data.length) {
-      let confirm = window.confirm('您确定要减少网格数量吗？某些网格项目将被删除。')
+    actedUponData(Number(row) * Number(col), data)
+  }
+}
 
-      if (confirm) {
-        data = data.splice(newLength, data.length - newLength)
-      }
-    }
-
-    return data
+let layoutTypeActedData = {
+  key: 'data',
+  cb (curLayout, data) {
+    if (curLayout.needDataLength) actedUponData(curLayout.needDataLength, data)
   }
 }
 
@@ -49,8 +60,15 @@ export default {
       type: 'e-select',
       label: '排版类型',
       propArr: [
-        { label: '网格', value: 'grid' },
-        { label: '杂志1', value: 'magazine-1' }
+        { type: 'grid', label: '网格', value: 'grid', level: 1 },
+        { type: 'magizine', label: '杂志', value: 'magazine-1', level: 1 },
+        { type: 'magizine', label: '杂志1', value: 'magazine-1', level: 2 },
+        { type: 'magizine', label: '杂志2', value: 'magazine-2', level: 2 },
+        { type: 'magizine', label: '杂志3', value: 'magazine-3', level: 2 },
+        { type: 'magizine', label: '杂志4', value: 'magazine-4', level: 2 }
+      ],
+      relative: [
+        new RelativeFn(layoutTypeActedData)
       ]
     }
   },
@@ -70,7 +88,10 @@ export default {
     default: col,
     editor: {
       type: 'e-input',
-      label: '列数'
+      label: '列数',
+      relative: [
+        new RelativeFn(rowColActedData)
+      ]
     }
   },
   height: {
