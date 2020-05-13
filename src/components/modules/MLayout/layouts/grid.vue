@@ -8,7 +8,7 @@
   @input="inputHandler"
   axis="xy"> -->
   <base-row
-  :gutter="gutterVal">
+  :gutter="props.gutter.mapVal[gutter]">
     <!-- <draggable> -->
       <!-- <transition-group> -->
         <base-col :ratioNum="col" v-for="(val, index) in data" :key="index">
@@ -37,16 +37,17 @@
 import mixin from './mixin'
 
 export default {
+  name: 'grid',
+  type: 'grid',
   data () {
     return {
       drag: true
     }
   },
-  name: 'grid',
   components: {
     // draggables
   },
-  props: ['data', 'gutterVal', 'col', 'row', 'height'],
+  props: ['data', 'gutter', 'col', 'row', 'height'],
   mixins: [mixin],
   computed: {},
   watch: {}

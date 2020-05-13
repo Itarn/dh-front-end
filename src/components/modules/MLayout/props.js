@@ -30,10 +30,12 @@ const dataShape = {
 // relative logic
 // common fn
 function actedUponData (newLength, data) {
+  data = cloneDeep(data)
+
   if (newLength > data.length) {
     data = [].concat(data, Array.from({ length: newLength - data.length }, (v, i) => {
       // dataShape.sid = data.length + i
-      return dataShape
+      return cloneDeep(dataShape)
     }))
   } else if (newLength < data.length) {
     let confirm = window.confirm('您确定要减少网格数量吗？某些网格项目将被删除。')
@@ -43,6 +45,7 @@ function actedUponData (newLength, data) {
     }
   }
 
+  console.log('data', data)
   return data
 }
 // arguments name should be MLayout data
@@ -55,9 +58,17 @@ let rowColActedData = {
 
 let layoutTypeActedData = {
   key: 'data',
-  cb (curLayout, data) {
-    if (curLayout.needDataLength) actedUponData(curLayout.needDataLength, data)
-    return data
+  cb (layoutType, data) {
+    const curLayout = this.getCurLayout(layoutType)
+
+    console.log('curLayout', curLayout)
+    if (curLayout.type === 'magazine' && curLayout.needDataLength) {
+      return actedUponData(curLayout.needDataLength, data)
+    } else if (curLayout.type === 'grid') {
+      return actedUponData(Number(this.row) * Number(this.col), data)
+    } else {
+      return data
+    }
   }
 }
 
@@ -118,7 +129,7 @@ export default {
   },
   height: {
     type: String,
-    default: 'min', // middle max
+    default: 'max', // middle max
     editor: {
       type: 'e-select',
       label: '高度',
@@ -132,6 +143,11 @@ export default {
   gutter: {
     type: String,
     default: 'max', // min max
+    mapVal: {
+      none: 0,
+      min: 10,
+      max: 30
+    },
     editor: {
       type: 'e-select',
       label: '间距',

@@ -30,7 +30,7 @@ export default {
     curAttr () {
       let curAttr = Attrs.filter((attr) => this.data.type === attr.name)[0]
 
-      console.log(this.data.type)
+      // console.log(this.data.type)
       return curAttr
       // return {
       //   name: curAttr.name,

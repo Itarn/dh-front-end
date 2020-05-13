@@ -1,19 +1,18 @@
 <template>
-  <BaseRow :gutter="gutterVal" align="stretch">
+  <BaseRow :gutter="props.gutter.mapVal[gutter]" align="stretch">
     <BaseCol blockNum="4">
-      <BaseRow :gutter="gutterVal">
+      <BaseRow :gutter="props.gutter.mapVal[gutter]">
         <BaseCol blockNum="12" v-for="(val, index) in firstTwoofData" :key="index">
           <Column
           :height="height"
-          :img="val.img"
+          :data="val"
           ></Column>
         </BaseCol>
       </BaseRow>
     </BaseCol>
     <BaseCol blockNum="8">
       <Column
-      :height="data[data.length-1].height"
-      :img="data[data.length-1].img"
+      :data="data[data.length-1]"
       ></Column>
     </BaseCol>
   </BaseRow>
@@ -23,12 +22,13 @@
 import mixin from './mixin'
 export default {
   name: 'magazine-1',
+  type: 'magazine',
   needDataLength: 3,
-  props: ['data', 'gutterVal', 'height'],
+  props: ['data', 'gutter', 'height'],
   mixins: [mixin],
   computed: {
     firstTwoofData () {
-      return this.data.slice(0, 2)
+      return this.data && this.data.slice(0, 2)
     }
   }
 }

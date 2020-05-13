@@ -5,11 +5,17 @@
   >
     <div :class="[bem('text-wrapper')]">
       <e-div
+      :class="[bem('title')]"
       :editing="status==='editing'"
       :data="data.title"
       @valChange="valChangeHandler($event, { key: `data[${index}].title` })"
       ></e-div>
-      <!-- <e-div :editing="status==='editing'" :data="data.subTitle"></e-div> -->
+      <e-div
+      :class="[bem('subtitle')]"
+      :editing="status==='editing'"
+      :data="data.subTitle"
+      @valChange="valChangeHandler($event, { key: `data[${index}].subTitle` })"
+      ></e-div>
     </div>
 
     <slot />
@@ -85,6 +91,15 @@ export default {
   }
 
   &__text-wrapper {
+    color: #fff;
+  }
+
+  &__title {
+    color: #fff; font-size: 25px;
+    margin-bottom: 20px;
+  }
+
+  &__subtitle {
     color: #fff;
   }
 

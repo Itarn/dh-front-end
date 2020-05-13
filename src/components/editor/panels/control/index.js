@@ -1,3 +1,3 @@
-import Control from './Control-logic'
+import Control from './Control'
 
 export default Control

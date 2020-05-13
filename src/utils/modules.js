@@ -11,7 +11,7 @@ class RelativeFn {
       })
 
       console.log(this, args)
-      return this._cb.apply(this, args)
+      return this._cb.apply(ctx, args)
     }
   }
 

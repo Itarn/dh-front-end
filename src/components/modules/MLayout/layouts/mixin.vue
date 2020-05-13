@@ -27,6 +27,9 @@ export default {
     EditorCell,
     EditorControl,
     EditorAttr
-  }
+  },
+  inject: [
+    'props'
+  ]
 }
 </script>

@@ -1,19 +1,20 @@
 <template>
   <div>
-    <!-- <base-button type="editing" :custom="btnStyle">
-      <BaseIcon type="arrow" :custom="{ fontSize: '12px' }" />  背景与链接
-    </base-button> -->
+    <BaseButton :type="editorCustomBtnStyle.type" :custom="editorCustomBtnStyle.custom">{{ editorProp.label }}</BaseButton>
 
-    <slot name="button" :editorCustomBtnStyle="editorCustomBtnStyle" />
-
-    <slot name="attr" />
+    <div v-for="prop in editorProp.attrProp" :key="prop.key">
+      {{ prop.info.val }}
+      <editor-attr :data="prop.info" @valChange="valChangeHandler($event, prop)"></editor-attr>
+    </div>
   </div>
 </template>
 
 <script>
-// import BaseButton from 'b/button'
+import BaseButton from 'b/button'
 // import BaseIcon from 'b/icon'
-// import EditorAttr from 'e/panels/attr'
+import EditorAttr from 'e/panels/attr'
+
+// import { mapActions } from vuex
 
 export default {
   data () {
@@ -29,11 +30,23 @@ export default {
       }
     }
   },
-  props: {},
+  inject: [
+    'valChangeHandler'
+  ],
+  props: {
+    editorProp: {
+      type: Object,
+      default: () => (
+        { label: '', attrProp: [] }
+      )
+    }
+  },
   components: {
-    // BaseButton,
+    BaseButton,
     // BaseIcon,
-    // EditorAttr
+    EditorAttr
+  },
+  methods: {
   }
 }
 </script>

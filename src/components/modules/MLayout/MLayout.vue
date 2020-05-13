@@ -30,11 +30,19 @@ import props from './props'
 import { MEditor } from './editor'
 import { layouts } from './layouts'
 
+import { cloneDeep } from '@/utils'
+
 // import { ParentMixin } from '@/mixins/relation.js'
 
 export default {
   name: 'm-layout',
   label: '网格',
+
+  data () {
+    return {
+      // curLayout: null
+    }
+  },
 
   components: {
     BaseButton,
@@ -48,7 +56,8 @@ export default {
   // ],
   provide () {
     return {
-      valChangeHandler: this.valChangeHandler
+      valChangeHandler: this.valChangeHandler,
+      props
     }
   },
 
@@ -70,14 +79,31 @@ export default {
       const vm = getVM(this.element.name)
       const props = vm.$options.props
 
-      MEditor.forEach(item => {
-        this.$set(item, 'attrProp', item.propSortList.map(key => ({ key, info: { ...props[key].editor, val: this[key] } })))
-      })
+      // item.propSortList.map(key => {
+      //     console.log([key], this[key], 'lll')
+      //     return { key, info: { ...props[key].editor, val: this[key] } }
+      //   })
+      // let arr = []
+      let editorInfo = cloneDeep(MEditor)
 
-      return MEditor
+      editorInfo.forEach((item, i) => {
+        let arr = []
+        item.propSortList.forEach((key, index) => {
+          // console.log(key, props, this[key])
+          let obj = {}
+          let info = { ...props[key].editor }
+          this.$set(info, 'val', this[key])
+          this.$set(obj, 'key', key)
+          this.$set(obj, 'info', info)
+          this.$set(arr, index, obj)
+        })
+        this.$set(item, 'attrProp', arr)
+      })
+      // console.log(editorInfo)
+      return editorInfo
     },
     curLayout () {
-      const layout = layouts.filter(l => l.name === this.layoutType)[0]
+      const layout = this.getCurLayout(this.layoutType)
       const data = {}
       let props = layout.props
       if (!Array.isArray(props) && typeof props === 'object') props = Object.keys(props)
@@ -85,24 +111,20 @@ export default {
 
       return {
         name: layout.name,
+        type: layout.type,
         needDataLength: layout.needDataLength || null,
         render (h) {
           return h(layout, { props: { ...data } })
         }
       }
-    },
-    gutterVal () {
-      let map = {
-        none: 0,
-        min: 10,
-        max: 30
-      }
-      return map[this.gutter]
     }
   },
 
   methods: {
     ...mapActions(['elementManager']),
+    getCurLayout (type) {
+      return layouts.filter(l => l.name === type)[0]
+    },
     updateElement (value) {
       this.elementManager({
         type: 'update',
@@ -113,18 +135,18 @@ export default {
       })
     },
     valChangeHandler ({ val: propVal }, { key, info = null }) {
-      this.updateElement({ propKey: key, propVal })
-
       if (info && info.relative) {
-        this.$nextTick(() => {
-          info.relative.forEach(r => {
-            const { key: rkey, cb = null } = r
-            if (key && cb) this.updateElement({ propKey: rkey, propVal: cb({ key, val: propVal, ctx: this }) })
-          })
+        info.relative.forEach(r => {
+          const { key: rkey, cb = null } = r
+          if (key && cb) this.updateElement({ propKey: rkey, propVal: cb({ key, val: propVal, ctx: this }) })
         })
       }
+
+      this.updateElement({ propKey: key, propVal })
     }
-  }
+  },
+
+  watch: {}
 }
 </script>
 
