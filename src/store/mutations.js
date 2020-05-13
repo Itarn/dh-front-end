@@ -22,11 +22,14 @@ const mutations = {
     } else if (type === 'update') {
       const { uuid, propKey, propVal } = value
       const ele = elements.find(ele => ele.uuid === uuid)
+
       if (!ele) console.warn('store 中未找到要编辑的组件')
+      console.log(propKey, propVal)
       ele.setPropValue(propKey, propVal)
     } else if (type === 'delete') {
       const { uuid } = value
       const index = elements.findIndex(ele => ele.uuid === uuid)
+
       if (index !== -1) elements.splice(index, 1)
     }
   }

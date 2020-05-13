@@ -54,6 +54,7 @@ export default createComponent({
 .base-col {
   padding: var(--base-gutter);
   flex: 1;
+  position: relative;
 
   @for $i from 1 through 12 {
     &--is-one-of-#{$i} {

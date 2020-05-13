@@ -1,12 +1,27 @@
 import { RelativeFn } from '@/utils/modules'
+import { cloneDeep } from '@/utils'
 
 // default info
 const row = 2
 const col = 3
 const dataShape = {
-  sid: null,
   img: 'https://static001-test.geekbang.org/resource/image/50/b5/505458a8ba12dd2a2d9410e68627a2b5.jpg',
-  link: 'https://www.geekbang.org',
+  link: {
+    default: 'https://www.geekbang.org',
+    editor: {
+      type: 'e-input',
+      label: '链接地址'
+    }
+  },
+  target: {
+    default: '_blank',
+    editor: {
+      type: 'e-checkbox',
+      propArr: [
+        { label: '是否在新标签页中打开' }
+      ]
+    }
+  },
   title: '我是标题',
   subTitle: '我是副标题',
   type: 'default'
@@ -55,8 +70,7 @@ export default {
     type: Array,
     default: () => {
       let arr = Array.from({ length: col * row }, (v, i) => {
-        // dataShape.sid = i
-        return dataShape
+        return cloneDeep(dataShape)
       })
       return arr
     }

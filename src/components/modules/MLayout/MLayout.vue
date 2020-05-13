@@ -6,16 +6,10 @@
 
     <template slot="editor">
       <div v-for="editorProp in editorPropsPanels" :key="editorProp.id">
-        <EditorControl>
-          <template v-slot:button="{ editorCustomBtnStyle }">
-            <BaseButton :type="editorCustomBtnStyle.type" :custom="editorCustomBtnStyle.custom">{{ editorProp.label }}</BaseButton>
-          </template>
-
-          <template slot="attr">
-            <div v-for="prop in editorProp.attrProp" :key="prop.key">
-              <editor-attr :data="prop.info" @input="inputHandler($event, { key: prop.key, relative: prop.info.relative })"></editor-attr>
-            </div>
-          </template>
+        <EditorControl
+         :editorProp="editorProp"
+         @valChange="valChangeHandler"
+        >
         </EditorControl>
       </div>
     </template>
@@ -36,6 +30,8 @@ import props from './props'
 import { MEditor } from './editor'
 import { layouts } from './layouts'
 
+// import { ParentMixin } from '@/mixins/relation.js'
+
 export default {
   name: 'm-layout',
   label: '网格',
@@ -45,6 +41,15 @@ export default {
     MSection,
     EditorControl,
     EditorAttr
+  },
+
+  // mixins: [
+  //   ParentMixin('MLayout')
+  // ],
+  provide () {
+    return {
+      valChangeHandler: this.valChangeHandler
+    }
   },
 
   props,
@@ -58,16 +63,12 @@ export default {
     /**
      * {
      *   key: "height",
-     *   info: { label: '高度', type: 'editor-selec', val: "middle", propArr: [{ label: "小", value: "min" }] }
+     *   info: { label: '高度', type: 'editor-selec', val: "middle", propArr: [{ label: "小", value: "min" }], relative: [] }
      * }
      */
     editorPropsPanels () {
       const vm = getVM(this.element.name)
       const props = vm.$options.props
-
-      // return Object.keys(props)
-      //   .filter(key => Object.prototype.hasOwnProperty.call(props[key], 'editor'))
-      //   .map(key => ({ key, val: this[key], info: props[key].editor }))
 
       MEditor.forEach(item => {
         this.$set(item, 'attrProp', item.propSortList.map(key => ({ key, info: { ...props[key].editor, val: this[key] } })))
@@ -111,14 +112,12 @@ export default {
         }
       })
     },
-    inputHandler (e, { key, relative = null }) {
-      const propVal = e.target.value
+    valChangeHandler ({ val: propVal }, { key, info = null }) {
       this.updateElement({ propKey: key, propVal })
 
-      console.log(e, key, relative)
-      if (relative) {
+      if (info && info.relative) {
         this.$nextTick(() => {
-          relative.forEach(r => {
+          info.relative.forEach(r => {
             const { key: rkey, cb = null } = r
             if (key && cb) this.updateElement({ propKey: rkey, propVal: cb({ key, val: propVal, ctx: this }) })
           })

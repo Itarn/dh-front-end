@@ -1,37 +1,37 @@
 <template>
   <div
-  :class="[bem({ 'is-hover-overlay': isHoverOverLay })]"
+  :class="[bem()]"
   :style="{ '--border-color': borderColor }"
   @mouseenter="btnShow = true"
   @mouseleave="btnShow = false"
   >
-    <div :class="[bem('mask')]">
-      <!-- row -->
-      <transition name="dh-fade">
-        <div :class="[bem('btn-wrap', ['row'])]" v-show="btnShow">
-          <slot name="row" />
-        </div>
-      </transition>
+    <div :class="[bem('mask')]" v-if="isHoverOverLay"></div>
 
-      <!-- column -->
-      <transition name="dh-fade">
-        <div :class="[bem('btn-wrap', ['column'])]" v-show="btnShow">
-          <base-button type="editing" :custom="btnStyle" v-if="close">
-            <base-icon type="close"/>
-          </base-button>
-          <base-button type="editing" :custom="btnStyle" v-if="druggle">
-            <base-icon type="druggle"/>
-          </base-button>
-        </div>
-      </transition>
+    <!-- row -->
+    <transition name="dh-fade">
+      <div :class="[bem('btn-wrap', ['row'])]" v-show="btnShow">
+        <slot name="row" />
+      </div>
+    </transition>
 
-      <!-- center -->
-      <transition name="dh-fade">
-        <div :class="[bem('btn-wrap', ['center'])]" v-show="btnShow">
-          <slot name="center" />
-        </div>
-      </transition>
-    </div>
+    <!-- column -->
+    <transition name="dh-fade">
+      <div :class="[bem('btn-wrap', ['column'])]" v-show="btnShow">
+        <base-button type="editing" :custom="btnStyle" v-if="close">
+          <base-icon type="close"/>
+        </base-button>
+        <base-button type="editing" :custom="btnStyle" v-if="druggle" @mouseover.native="isHoverOverLay = true" @mouseout.native="isHoverOverLay = false">
+          <base-icon type="druggle"/>
+        </base-button>
+      </div>
+    </transition>
+
+    <!-- center -->
+    <transition name="dh-fade">
+      <div :class="[bem('btn-wrap', ['center'])]" v-show="btnShow">
+        <slot name="center" />
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -54,8 +54,10 @@ export default createComponent({
         fontSize: '14px',
         height: '25px',
         paddingLeft: '5px',
-        paddingRight: '5px'
-      }
+        paddingRight: '5px',
+        cursor: 'move'
+      },
+      isHoverOverLay: false
     }
   },
   components: {
@@ -63,10 +65,10 @@ export default createComponent({
     BaseIcon
   },
   props: {
-    isHoverOverLay: {
-      type: Boolean,
-      default: true
-    },
+    // isHoverOverLay: {
+    //   type: Boolean,
+    //   default: false
+    // },
     button: {
       type: Array,
       default: () => { return [] } // close, druggle, edit, custom
@@ -85,7 +87,10 @@ export default createComponent({
     }
   },
   methods: {
-    bem (...args) { return bem(...args) }
+    bem (...args) { return bem(...args) },
+    mouseover () {
+      console.log('eee')
+    }
   }
 })
 </script>
@@ -96,7 +101,7 @@ $gap: 10px; // 距离实际元素的安全距离
 $border: 1px;
 
 .e-cell {
-  position: absolute; left: -$gap; top: -$gap; right: -$gap; bottom: -$gap;
+  position: absolute; top: 0; right: 0;
   padding: $gap;
   border-radius: 2px;
   border: $border solid transparent;
@@ -112,6 +117,7 @@ $border: 1px;
   }
 
   & &__mask {
+    position: absolute; left: -$gap; top: -$gap; right: -$gap; bottom: -$gap;
     width: calc(100% + #{$border} * 2); height: calc(100% + #{$border} * 2);
     transform: translateX(-#{$border}) translateY(-#{$border});
     display: flex; justify-content: flex-end;

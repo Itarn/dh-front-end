@@ -1,12 +1,11 @@
-import { getUUID } from '../../../utils/element'
-import clonedeep from 'lodash.clonedeep'
+import { genUUID, cloneDeep, setVal } from '../../../utils'
 
 class Element {
   constructor (ele) {
     this.name = ele.name
-    this.uuid = getUUID()
+    this.uuid = genUUID()
 
-    // const moduleProps = clonedeep(ele.props)
+    // const moduleProps = cloneDeep(ele.props)
     this.moduleProps = {}
     Object.keys(ele.props).filter(key => key !== 'editor').map(key => {
       const defaultVal = ele.props[key].default
@@ -27,8 +26,8 @@ class Element {
     return this.moduleProps[propNme]
   }
 
-  setPropValue (propNme, value) {
-    this.moduleProps[propNme] = clonedeep(value)
+  setPropValue (propName, value) {
+    setVal(this.moduleProps, propName, cloneDeep(value))
   }
 }
 

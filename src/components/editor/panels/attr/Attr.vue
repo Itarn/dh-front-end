@@ -1,7 +1,7 @@
 <template>
   <div>
     <span>{{ data.label }}</span>
-    <component :is="curAttr" :data="data" @input="inputHandler"></component>
+    <component :is="curAttr" :data="data" @valChange="valChange"></component>
   </div>
 </template>
 
@@ -15,15 +15,15 @@ export default {
       default: () => ({})
     }
   },
-  provide () {
-    return {
-      inputHandler: this.inputHandler
-    }
-  },
+  // provide () {
+  //   return {
+  //     valChange: this.valChange
+  //   }
+  // },
   methods: {
-    inputHandler ($event) {
-      console.log(this.data)
-      this.$emit('input', $event)
+    valChange (data) {
+      // console.log(data)
+      this.$emit('valChange', data)
     }
   },
   computed: {

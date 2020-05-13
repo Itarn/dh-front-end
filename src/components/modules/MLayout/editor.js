@@ -12,3 +12,15 @@ export const MEditor = [
     ]
   }
 ]
+
+export const DataEditor = [
+  {
+    id: 1,
+    label: '背景与链接',
+    propSortList: {
+      img: ['upload', 'edit', 'remove'],
+      link: 'link',
+      target: 'target'
+    }
+  }
+]

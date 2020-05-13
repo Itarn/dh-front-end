@@ -1,26 +1,35 @@
 <template>
-  <RowSort :gutter="gutterVal" :value="data" @input="inputHandler" axis="xy">
+  <!-- <base-row
+  :gutter="gutterVal"
+  lockOffset="0%"
+  :pressThreshold="0"
+  :hideSortableGhost="true"
+  :value="data"
+  @input="inputHandler"
+  axis="xy"> -->
+  <base-row
+  :gutter="gutterVal">
     <!-- <draggable> -->
       <!-- <transition-group> -->
-        <ColSort :ratioNum="col" v-for="(val, index) in data" :key="index" :index="index">
+        <base-col :ratioNum="col" v-for="(val, index) in data" :key="index">
           <Column
+          :index="index"
           :height="height"
-          :img="val.img"
+          :data="val"
           >
             <editor-cell :button="['druggle']">
             <!-- <editor-cell> -->
               <!-- <base-button slot="center" class="plr5 h25 fs12" type="editing">编辑</base-button> -->
               <!-- <div slot="columns"></div> -->
               <div slot="row">
-                <editor-control>
-                </editor-control>
+                <editor-control></editor-control>
               </div>
             </editor-cell>
           </Column>
-        </ColSort>
+        </base-col>
       <!-- </transition-group> -->
     <!-- </draggable> -->
-  </RowSort>
+  </base-row>
 </template>
 
 <script>
@@ -40,11 +49,6 @@ export default {
   props: ['data', 'gutterVal', 'col', 'row', 'height'],
   mixins: [mixin],
   computed: {},
-  methods: {
-    inputHandler ($event) {
-      console.log($event)
-    }
-  },
   watch: {}
 }
 </script>

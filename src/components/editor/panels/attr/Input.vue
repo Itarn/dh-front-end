@@ -1,5 +1,5 @@
 <template>
-   <input type="text" :value="data.val" @input="inputHandler($event)">
+   <input type="text" :value="data.val" @input="valChange($event)">
 </template>
 
 <script>
@@ -11,7 +11,11 @@ export default {
       default: () => ({})
     }
   },
-  inject: ['inputHandler']
+  methods: {
+    valChange ($event) {
+      this.$emit('valChange', { $event, val: $event.target.value })
+    }
+  }
 }
 </script>
 

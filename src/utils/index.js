@@ -1,3 +1,5 @@
+import lodashSet from 'lodash.set'
+
 export { createNamespace } from './create'
 
 export function isDef (val) {
@@ -22,7 +24,7 @@ export function isNonPrimative (val) {
   return key.findIndex(k => getType(val) === k) !== -1
 }
 
-function getType (obj) {
+export function getType (obj) {
   let str = Object.prototype.toString.call(obj) // 检测基本类型值，引用类型值的类型
   let map = {
     '[object Boolean]': 'boolean',
@@ -40,4 +42,20 @@ function getType (obj) {
     return 'element' // Dom 对象
   }
   return map[str]
+}
+
+export function cloneDeep (val) {
+  if (isNonPrimative(val)) {
+    val = JSON.parse(JSON.stringify(val))
+  }
+  return val
+}
+
+export function setVal (...args) {
+  lodashSet(...args)
+}
+
+export function genUUID () {
+  // http://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid-in-javascript
+  return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
 }
