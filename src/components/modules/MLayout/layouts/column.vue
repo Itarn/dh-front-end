@@ -141,6 +141,7 @@ export default {
   &__text-wrapper {
     color: #fff;
     width: 80%; margin: 0 auto;
+    text-align: center;
   }
 
   &__title {

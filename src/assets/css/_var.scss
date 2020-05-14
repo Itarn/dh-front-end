@@ -10,6 +10,7 @@ $gray-6: #969799;
 $gray-7: #646566;
 $gray-8: #323233;
 $gray-9: #2f2f2f;
+$gray-10: #222222;
 $red: #ee0a24;
 $blue: #1989fa;
 $orange: #ff976a;
@@ -49,7 +50,8 @@ $price-integer-font-family: Avenir-Heavy, PingFang SC, Helvetica Neue, Arial,
 
 // Animation
 $animation-duration-base: 0.3s;
-$animation-duration-fast: 0.2s;
+$animation-duration-quick: 0.2s;
+$animation-duration-fast: 0.1s;
 $animation-timing-function-enter: ease-out;
 $animation-timing-function-leave: ease-in;
 
@@ -110,3 +112,5 @@ $button-border-radius: $border-radius-md;
 $button-round-border-radius: $border-radius-max;
 $button-plain-background-color: $white;
 $button-disabled-opacity: $disabled-opacity;
+
+

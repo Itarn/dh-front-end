@@ -147,7 +147,7 @@ export default createComponent(button)
 
   &--editing {
     color: $white;
-    background-color: $gray-9;
+    background-color: $gray-10;
     // border: 1px solid $button-warning-border-color;
     border-radius: 4px;
   }

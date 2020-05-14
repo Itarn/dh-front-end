@@ -28,6 +28,8 @@ export default createComponents({
 <style lang="scss" scoped>
 
 .base-icon {
+  display: inline-block;
+  transition: all $animation-duration-fast linear;
   font-size: 14px;
   color: $white;
 }

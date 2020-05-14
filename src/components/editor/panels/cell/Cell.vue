@@ -1,7 +1,7 @@
 <template>
   <div
   ref="editorCell"
-  :class="[bem()]"
+  :class="[bem({ isOverLay: isOverLayWrapperShow })]"
   :style="{ '--border-color': borderColor }"
   >
     <div :class="[bem('mask')]" v-if="isOverLayWrapperShow"></div>
@@ -20,7 +20,7 @@
           <base-button type="editing" :custom="btnStyle" v-if="close">
             <base-icon type="close"/>
           </base-button>
-          <base-button type="editing" :custom="btnStyle" v-if="druggle" @mouseover.native="isHoverOverLay = true" @mouseout.native="isHoverOverLay = false">
+          <base-button type="editing" :custom="btnStyle" v-if="druggle" @mouseenter.native="isOverLayWrapperShow = true" @mouseleave.native="isOverLayWrapperShow = false">
             <base-icon type="druggle"/>
           </base-button>
         </div>
@@ -92,11 +92,14 @@ export default createComponent({
     bem (...args) { return bem(...args) },
     mouseenterHandler () {
       this.btnShow = true
-      this.isOverLayWrapperShow = true
+      // this.isOverLayWrapperShow = true
     },
     mouseleaveHandler () {
       this.btnShow = false
-      this.isOverLayWrapperShow = false
+      // this.isOverLayWrapperShow = false
+    },
+    xxhandler () {
+      console.log('333')
     }
   },
   mounted () {
@@ -120,20 +123,16 @@ $border: 1px;
   border-radius: 2px;
   border: $border solid transparent;
 
-  &--is-hover-overlay {
-    &:hover {
-      border: $border solid var(--border-color);
-      & .e-cell__mask {
-        background-color: rgba($white, 0.8);
-        transition: all 0.1s linear;
-      }
-    }
+  &--isOverLay {
+    left: 0; bottom: 0;
   }
 
   & &__mask {
+    border: $border solid var(--border-color);
     position: absolute; left: -$gap; top: -$gap; right: -$gap; bottom: -$gap;
-    width: calc(100% + #{$border} * 2); height: calc(100% + #{$border} * 2);
     transform: translateX(-#{$border}) translateY(-#{$border});
+    background-color: rgba($white, 0.8);
+    transition: all 0.2s linear;
   }
 
   &__btn {
