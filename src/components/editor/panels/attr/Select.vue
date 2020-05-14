@@ -44,7 +44,7 @@ export default {
   border: 1px solid #444;
   border-radius: 3px;
   color: $white;
-  font-size: $font-size-sm; font-weight: 500;
+  font-size: $font-size-sm; font-weight: $font-weight-bold;
   padding: 0px 10px 1px;
   -webkit-appearance: menulist;
 

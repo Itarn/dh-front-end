@@ -20,7 +20,12 @@
           <base-button type="editing" :custom="btnStyle" v-if="close">
             <base-icon type="close"/>
           </base-button>
-          <base-button type="editing" :custom="btnStyle" v-if="druggle" @mouseenter.native="isOverLayWrapperShow = true" @mouseleave.native="isOverLayWrapperShow = false">
+          <base-button
+          v-if="druggle"
+          type="editing"
+          :custom="btnStyle"
+          @mouseenter.native="btnMouseenterHandler"
+          @mouseleave.native="btnMouseleaveHandler">
             <base-icon type="druggle"/>
           </base-button>
         </div>
@@ -73,7 +78,7 @@ export default createComponent({
     // },
     button: {
       type: Array,
-      default: () => { return [] } // close, druggle, edit, custom
+      default: () => ([]) // close, druggle, edit, custom
     },
     borderColor: {
       type: String,
@@ -90,23 +95,28 @@ export default createComponent({
   },
   methods: {
     bem (...args) { return bem(...args) },
-    mouseenterHandler () {
+    fatherMouseenterHandler () {
       this.btnShow = true
       // this.isOverLayWrapperShow = true
     },
-    mouseleaveHandler () {
+    fatherMouseleaveHandler () {
       this.btnShow = false
       // this.isOverLayWrapperShow = false
     },
-    xxhandler () {
-      console.log('333')
+    btnMouseenterHandler () {
+      this.isOverLayWrapperShow = true
+      this.$bus.emit('draggle', !this.isOverLayWrapperShow)
+    },
+    btnMouseleaveHandler () {
+      this.isOverLayWrapperShow = false
+      this.$bus.emit('draggle', !this.isOverLayWrapperShow)
     }
   },
   mounted () {
     this.$nextTick(() => {
       const parent = this.$refs.editorCell.parentElement
-      parent.addEventListener('mouseenter', this.mouseenterHandler)
-      parent.addEventListener('mouseleave', this.mouseleaveHandler)
+      parent.addEventListener('mouseenter', this.fatherMouseenterHandler)
+      parent.addEventListener('mouseleave', this.fatherMouseleaveHandler)
     })
   }
 })

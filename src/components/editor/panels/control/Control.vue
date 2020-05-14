@@ -40,7 +40,7 @@ const [, bem] = createNamespace('e', 'control')
 export default {
   data () {
     return {
-      open: true,
+      open: false,
       editorCustomBtnStyle: {
         type: 'editing',
         custom: {

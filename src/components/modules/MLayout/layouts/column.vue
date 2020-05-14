@@ -20,7 +20,7 @@
     </div>
 
     <!-- 编辑器部分 -->
-    <editor-cell :button="['druggle']">
+    <editor-cell :button="editor.button">
     <!-- <editor-cell> -->
       <!-- <base-button slot="center" class="plr5 h25 fs12" type="editing">编辑</base-button> -->
       <!-- <div slot="columns"></div> -->
@@ -64,11 +64,23 @@ export default {
   //   ChildrenMixin('MLayout')
   // ],
 
-  props: [
-    'index',
-    'height',
-    'data'
-  ],
+  props: {
+    index: {
+      type: [String, Number]
+    },
+    height: {
+      type: [String, Number]
+    },
+    data: {
+      type: Object
+    },
+    editor: {
+      type: Object,
+      default: () => ({
+        button: []
+      })
+    }
+  },
 
   inject: [
     'valChangeHandler'

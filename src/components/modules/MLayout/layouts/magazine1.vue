@@ -8,12 +8,6 @@
           :height="height"
           :data="val"
           >
-            <editor-cell>
-              <!-- <div slot="row">
-                <editor-control
-                ></editor-control>
-              </div> -->
-            </editor-cell>
           </Column>
         </BaseCol>
       </BaseRow>
@@ -23,12 +17,6 @@
       :index="data.length-1"
       :data="data[data.length-1]"
       >
-        <editor-cell>
-            <!-- <div slot="row">
-            <editor-control
-            ></editor-control>
-          </div> -->
-        </editor-cell>
       </Column>
     </BaseCol>
   </BaseRow>
