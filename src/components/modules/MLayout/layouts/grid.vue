@@ -17,14 +17,6 @@
           :height="height"
           :data="val"
           >
-            <editor-cell :button="['druggle']">
-            <!-- <editor-cell> -->
-              <!-- <base-button slot="center" class="plr5 h25 fs12" type="editing">编辑</base-button> -->
-              <!-- <div slot="columns"></div> -->
-              <div slot="row">
-                <editor-control></editor-control>
-              </div>
-            </editor-cell>
           </Column>
         </base-col>
       <!-- </transition-group> -->
@@ -33,8 +25,12 @@
 </template>
 
 <script>
+// import { cloneDeep, isObject } from '@/utils'
 // import draggable from 'b/draggable'
 import mixin from './mixin'
+
+// import { DataEditor } from 'm/MLayout/editor'
+// import { dataShape } from 'm/MLayout/props'
 
 export default {
   name: 'grid',

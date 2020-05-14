@@ -29,7 +29,8 @@ export default {
     EditorAttr
   },
   inject: [
-    'props'
+    'props',
+    'valChangeHandler'
   ]
 }
 </script>

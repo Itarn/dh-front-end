@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { getVM } from '@/utils/element'
+// import { getVM } from '@/utils/element'
 import { mapState, mapActions } from 'vuex'
 
 import BaseButton from 'b/button'
@@ -76,22 +76,14 @@ export default {
      * }
      */
     editorPropsPanels () {
-      const vm = getVM(this.element.name)
-      const props = vm.$options.props
-
-      // item.propSortList.map(key => {
-      //     console.log([key], this[key], 'lll')
-      //     return { key, info: { ...props[key].editor, val: this[key] } }
-      //   })
-      // let arr = []
       let editorInfo = cloneDeep(MEditor)
 
       editorInfo.forEach((item, i) => {
         let arr = []
-        item.propSortList.forEach((key, index) => {
-          // console.log(key, props, this[key])
+
+        Object.keys(item.propSortList).forEach((key, index) => {
           let obj = {}
-          let info = cloneDeep(props[key].editor)
+          let info = cloneDeep(item.propSortList[key])
           this.$set(info, 'val', this[key])
           this.$set(obj, 'key', key)
           this.$set(obj, 'info', info)
@@ -99,7 +91,6 @@ export default {
         })
         this.$set(item, 'attrProp', arr)
       })
-      // console.log(editorInfo)
       return editorInfo
     },
     curLayout () {
@@ -138,7 +129,9 @@ export default {
       if (info && info.relative) {
         info.relative.forEach(r => {
           const { key: rkey, cb = null } = r
-          if (key && cb) this.updateElement({ propKey: rkey, propVal: cb({ key, val: propVal, ctx: this }) })
+          if (key && cb) {
+            this.updateElement({ propKey: rkey, propVal: cb({ key, val: propVal, ctx: this }) })
+          }
         })
       }
 
@@ -167,6 +160,11 @@ export default {
     &--max-height {
       height: 340px;
     }
+  }
+
+  &:hover {
+     border: 1px solid #fff;
+    border-radius: 5px;
   }
 
 }

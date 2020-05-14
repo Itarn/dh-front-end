@@ -1,8 +1,9 @@
 <template>
-  <div
+  <a
   :class="[bem('col', { [`${height}-height`]: height })]"
   :style="{ backgroundImage: `url(${data.img})` }"
   >
+    <!-- 布局样式等 -->
     <div :class="[bem('text-wrapper')]">
       <e-div
       :class="[bem('title')]"
@@ -18,14 +19,35 @@
       ></e-div>
     </div>
 
-    <slot />
-  </div>
+    <!-- 编辑器部分 -->
+    <editor-cell :button="['druggle']">
+    <!-- <editor-cell> -->
+      <!-- <base-button slot="center" class="plr5 h25 fs12" type="editing">编辑</base-button> -->
+      <!-- <div slot="columns"></div> -->
+      <div slot="row">
+        <div v-for="editorProp in editorPropsPanels" :key="editorProp.id">
+          <EditorControl
+          :editorProp="editorProp"
+          @valChange="valChangeHandler"
+          >
+          </EditorControl>
+        </div>
+      </div>
+    </editor-cell>
+  </a>
 </template>
 
 <script>
-import { createNamespace } from '@/utils'
+import { createNamespace, cloneDeep } from '@/utils'
+
 import EditableDiv from 'e/panels/attr/EditableDiv'
+import EditorCell from 'e/panels/cell'
+import EditorControl from 'e/panels/control'
+
 import { mapState } from 'vuex'
+
+import { DataEditor } from 'm/MLayout/editor'
+// import { dataShape } from 'm/MLayout/props'
 
 // import { ChildrenMixin } from '@/mixins/relation'
 
@@ -33,7 +55,9 @@ const [, bem] = createNamespace('m', 'layout')
 
 export default {
   components: {
-    EDiv: EditableDiv
+    EDiv: EditableDiv,
+    EditorCell,
+    EditorControl
   },
 
   // mixins: [
@@ -55,7 +79,31 @@ export default {
   },
 
   computed: {
-    ...mapState(['status'])
+    ...mapState(['status']),
+    /**
+     * {
+     *   key: "height",
+     *   info: { label: '高度', type: 'editor-selec', val: "middle", propArr: [{ label: "小", value: "min" }], relative: [] }
+     * }
+     */
+    editorPropsPanels () {
+      let editorInfo = cloneDeep(DataEditor)
+
+      editorInfo.forEach((item, i) => {
+        let arr = []
+
+        Object.keys(item.propSortList).forEach((key, index) => {
+          let obj = {}
+          let info = cloneDeep(item.propSortList[key])
+          this.$set(info, 'val', this.data[key])
+          this.$set(obj, 'key', key)
+          this.$set(obj, 'info', info)
+          this.$set(arr, index, obj)
+        })
+        this.$set(item, 'attrProp', arr)
+      })
+      return editorInfo
+    }
   },
 
   created () {

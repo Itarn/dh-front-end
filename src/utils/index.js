@@ -1,4 +1,5 @@
 import lodashSet from 'lodash.set'
+import lodashCloneDeep from 'lodash.clonedeep'
 
 export { createNamespace } from './create'
 
@@ -45,10 +46,11 @@ export function getType (obj) {
 }
 
 export function cloneDeep (val) {
-  if (isNonPrimative(val)) {
-    val = JSON.parse(JSON.stringify(val))
-  }
-  return val
+  // if (isNonPrimative(val)) {
+  //   val = JSON.parse(JSON.stringify(val))
+  // }
+  // return val
+  return lodashCloneDeep(val)
 }
 
 export function setVal (...args) {

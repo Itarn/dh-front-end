@@ -24,7 +24,6 @@ const mutations = {
       const ele = elements.find(ele => ele.uuid === uuid)
 
       if (!ele) console.warn('store 中未找到要编辑的组件')
-      console.log(propKey, propVal)
       ele.setPropValue(propKey, propVal)
     } else if (type === 'delete') {
       const { uuid } = value
