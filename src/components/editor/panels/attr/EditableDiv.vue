@@ -1,6 +1,6 @@
 <template>
   <div
-  class="e-div"
+  :class="[bem({ editing })]"
   :contenteditable="editing"
   @blur="valChangeHandler"
   >
@@ -10,6 +10,10 @@
 </template>
 
 <script>
+import { createNamespace } from '@/utils'
+
+const [, bem] = createNamespace('e', 'div')
+
 export default {
   props: {
     editing: {
@@ -22,6 +26,7 @@ export default {
     }
   },
   methods: {
+    bem (...arg) { return bem(...arg) },
     valChangeHandler ($event) {
       console.log($event.target.innerText)
       this.$emit('valChange', { $event, val: $event.target.innerText })
@@ -30,9 +35,32 @@ export default {
 }
 </script>
 
-<style style="scss" scoped>
+<style scoped lang="scss">
+
+$gap: 10px;
 
 .e-div {
+  display: block;
   color: #fff;
+  outline: none;
+  position: relative;
+
+  &--editing {
+    cursor: text;
+    &::after {
+      display: none;
+      content: '';
+      position: absolute; top: -$gap; bottom: -$gap; left: -$gap; right: -$gap;
+      border: 1px solid #fff;
+      border-radius: 5px;
+    }
+    &:hover {
+      &::after{
+        display: block;
+      }
+    }
+  }
+
 }
+
 </style>

@@ -3,7 +3,6 @@
     <BaseButton :type="editorCustomBtnStyle.type" :custom="editorCustomBtnStyle.custom">{{ editorProp.label }}</BaseButton>
 
     <div v-for="prop in editorProp.attrProp" :key="prop.key">
-      {{ prop.info.val }}
       <editor-attr :data="prop.info" @valChange="valChangeHandler($event, prop)"></editor-attr>
     </div>
   </div>
@@ -24,8 +23,8 @@ export default {
         custom: {
           fontSize: '12px',
           height: '25px',
-          paddingLeft: '15px',
-          paddingRight: '15px'
+          paddingLeft: '35px',
+          paddingRight: '35px'
         }
       }
     }

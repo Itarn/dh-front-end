@@ -10,7 +10,6 @@ class RelativeFn {
         return this.cloneNonPrimativeArg(a === key ? val : ctx[a])
       })
 
-      console.log(this, args)
       return this._cb.apply(ctx, args)
     }
   }

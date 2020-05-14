@@ -4,16 +4,32 @@
       <BaseRow :gutter="props.gutter.mapVal[gutter]">
         <BaseCol blockNum="12" v-for="(val, index) in firstTwoofData" :key="index">
           <Column
+          :index="index"
           :height="height"
           :data="val"
-          ></Column>
+          >
+            <editor-cell>
+              <!-- <div slot="row">
+                <editor-control
+                ></editor-control>
+              </div> -->
+            </editor-cell>
+          </Column>
         </BaseCol>
       </BaseRow>
     </BaseCol>
     <BaseCol blockNum="8">
       <Column
+      :index="data.length-1"
       :data="data[data.length-1]"
-      ></Column>
+      >
+        <editor-cell>
+            <!-- <div slot="row">
+            <editor-control
+            ></editor-control>
+          </div> -->
+        </editor-cell>
+      </Column>
     </BaseCol>
   </BaseRow>
 </template>

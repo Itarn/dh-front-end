@@ -1,6 +1,5 @@
 <template>
    <select @change="valChange($event)">
-     {{ data }}
     <option :value="each.value" :selected="each.value === data.val" v-for="each in data.propArr" :key="each.label">{{ each.label }}</option>
   </select>
 </template>

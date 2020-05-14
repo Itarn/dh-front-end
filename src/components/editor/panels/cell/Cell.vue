@@ -1,11 +1,12 @@
 <template>
   <div
+  ref="editorCell"
   :class="[bem()]"
   :style="{ '--border-color': borderColor }"
-  @mouseenter="btnShow = true"
-  @mouseleave="btnShow = false"
+  @mouseenter="mouseenterHandler"
+  @mouseleave="mouseleaveHandler"
   >
-    <div :class="[bem('mask')]" v-if="isHoverOverLay"></div>
+    <div :class="[bem('mask')]" v-if="isOverLayWrapperShow"></div>
 
     <!-- row -->
     <transition name="dh-fade">
@@ -50,14 +51,15 @@ export default createComponent({
   data () {
     return {
       btnShow: false,
+      isOverLayWrapperShow: false,
       btnStyle: {
         fontSize: '14px',
         height: '25px',
         paddingLeft: '5px',
         paddingRight: '5px',
         cursor: 'move'
-      },
-      isHoverOverLay: false
+      }
+      // isHoverOverLay: true
     }
   },
   components: {
@@ -88,9 +90,22 @@ export default createComponent({
   },
   methods: {
     bem (...args) { return bem(...args) },
-    mouseover () {
-      console.log('eee')
+    mouseenterHandler () {
+      this.btnShow = true
+      this.isOverLayWrapperShow = true
+    },
+    mouseleaveHandler () {
+      this.btnShow = false
+      this.isOverLayWrapperShow = false
     }
+  },
+  mounted () {
+    this.$nextTick(() => {
+      console.dir(this.$refs.editorCell.parentElement)
+      const parent = this.$refs.editorCell.parentElement
+      parent.addEventListener('mouseenter', this.mouseenterHandler)
+      parent.addEventListener('mouseleave', this.mouseleaveHandler)
+    })
   }
 })
 </script>
@@ -105,6 +120,7 @@ $border: 1px;
   padding: $gap;
   border-radius: 2px;
   border: $border solid transparent;
+  display: flex; justify-content: flex-end;
 
   &--is-hover-overlay {
     &:hover {
@@ -120,7 +136,6 @@ $border: 1px;
     position: absolute; left: -$gap; top: -$gap; right: -$gap; bottom: -$gap;
     width: calc(100% + #{$border} * 2); height: calc(100% + #{$border} * 2);
     transform: translateX(-#{$border}) translateY(-#{$border});
-    display: flex; justify-content: flex-end;
     padding: $gap;
   }
 

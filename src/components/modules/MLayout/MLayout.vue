@@ -91,7 +91,7 @@ export default {
         item.propSortList.forEach((key, index) => {
           // console.log(key, props, this[key])
           let obj = {}
-          let info = { ...props[key].editor }
+          let info = cloneDeep(props[key].editor)
           this.$set(info, 'val', this[key])
           this.$set(obj, 'key', key)
           this.$set(obj, 'info', info)
