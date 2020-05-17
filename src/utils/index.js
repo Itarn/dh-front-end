@@ -1,7 +1,7 @@
 import lodashSet from 'lodash.set'
 import lodashCloneDeep from 'lodash.clonedeep'
 
-export { createNamespace } from './create'
+export { createNamespace, createBemNamespace, createCpnNamespace } from './create'
 
 export function isDef (val) {
   return getType(val) !== 'undefined' && getType(val) !== 'null'
@@ -60,4 +60,32 @@ export function setVal (...args) {
 export function genUUID () {
   // http://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid-in-javascript
   return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
+}
+
+export function loadJs (url = '') {
+  if (!url) return
+  if (!loadJs.cache) loadJs.cache = {}
+  if (loadJs.cache[url]) return Promise.resolve()
+  return new Promise((resolve, reject) => {
+    _loadjs(
+      url,
+      () => {
+        loadJs.cache[url] = 'cached'
+        resolve()
+      },
+      () => {
+        console.error(`${url} 加载失败`)
+        reject(new Error(`${url} 加载失败`))
+      }
+    )
+  })
+
+  function _loadjs (url, fn, fail) {
+    var script = document.createElement('script')
+    script.src = url
+    script.async = true
+    script.onload = fn
+    script.onerror = fail
+    ;(document.body || document.head).appendChild(script)
+  }
 }

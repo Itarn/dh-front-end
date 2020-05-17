@@ -1,10 +1,12 @@
 <template>
   <MSection>
     <div :class="[{ 'layout-content': wideType === 'content' }]">
-      <component :is="curLayout"></component>
+      <component :is="curLayout">
+
+      </component>
     </div>
 
-    <template slot="editor">
+    <template slot="editor" v-if="status === 'editing'">
       <div v-for="editorProp in editorPropsPanels" :key="editorProp.id">
         <EditorControl
          :editorProp="editorProp"
@@ -17,25 +19,30 @@
 </template>
 
 <script>
+import { createCpnNamespace, cloneDeep } from '@/utils'
 // import { getVM } from '@/utils/element'
 import { mapState, mapActions } from 'vuex'
 
 import BaseButton from 'b/button'
-import MSection from 'm/MSection'
+import MSection from 'p/section'
 
-import EditorControl from 'e/panels/control'
-import EditorAttr from 'e/panels/attr'
+// import EditorControl from 'e/panels/control'
+// import EditorAttr from 'e/panels/attr'
 
 import props from './props'
 import { MEditor } from './editor'
 import { layouts } from './layouts'
 
-import { cloneDeep } from '@/utils'
-
 // import { ParentMixin } from '@/mixins/relation.js'
 
-export default {
-  name: 'm-layout',
+const createComponent = createCpnNamespace('dh', 'layout')
+
+export default createComponent({
+  packageInfo: {
+    package: '@dunhuang-pc/dh-layout',
+    version: '1.0.2',
+    name: 'dh-layout'
+  },
   label: '网格',
 
   data () {
@@ -47,8 +54,8 @@ export default {
   components: {
     BaseButton,
     MSection,
-    EditorControl,
-    EditorAttr
+    EditorControl: () => import('e/panels/control'),
+    EditorAttr: () => import('e/panels/attr')
   },
 
   // mixins: [
@@ -65,6 +72,7 @@ export default {
 
   computed: {
     ...mapState({
+      status: 'status',
       element: function ({ elements }) {
         return elements.find(ele => ele.uuid === this.uuid)
       }
@@ -140,7 +148,7 @@ export default {
   },
 
   watch: {}
-}
+})
 </script>
 
 <style scoped lang="scss">

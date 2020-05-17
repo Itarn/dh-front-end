@@ -4,12 +4,14 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 const PageEditor = (resolve) => require(['@/views/editor'], resolve)
+const PagePreview = (resolve) => require(['@/views/preview'], resolve)
 const PageMyBoard = (resolve) => require(['@/views/myboard'], resolve)
 
 const routes = [
   { path: '/', redirect: '/myboard' },
   { path: '/myboard', name: 'PageMyBoard', component: PageMyBoard },
-  { path: '/edit/:id(.*)', name: 'PageEditor', props: true, component: PageEditor }
+  { path: '/edit/:id(.*)', name: 'PageEditor', props: true, component: PageEditor },
+  { path: '/preview/:id(.*)', name: 'PagePreview', props: true, component: PagePreview }
 ]
 
 const scrollBehavior = (to, from, savedPosition) => {

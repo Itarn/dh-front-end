@@ -11,13 +11,18 @@ const mutations = {
   [types.CHECK_MOBILE] (state, mobile) {
     state.isMobile = mobile
   },
+  [types.SET_STATUS] (state, status) {
+    state.status = status
+  },
   [types.SET_ELEMENTS] (state, { type, value }) {
     const { elements } = state
     if (type === 'add') {
-      let { name, props = null } = value
+      let { name, props = null, packageInfo = null, uuid = null } = value
       const vm = getVM(name)
       if (!props) props = vm.$options.props
-      const element = new Element({ name, props })
+      if (!packageInfo) packageInfo = vm.$options.packageInfo
+      if (!uuid) packageInfo = vm.$options.uuid
+      const element = new Element({ name, props, packageInfo, uuid })
       elements.push(element)
     } else if (type === 'update') {
       const { uuid, propKey, propVal } = value

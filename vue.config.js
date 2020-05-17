@@ -14,7 +14,8 @@ module.exports = {
       scss: {
         prependData
       }
-    }
+    },
+    extract: false
   },
   devServer: {
     open: true,
@@ -35,6 +36,6 @@ module.exports = {
 
       .set('b', resolve('./src/components/base'))
       .set('e', resolve('./src/components/editor'))
-      .set('m', resolve('./src/components/modules'))
+      .set('p', resolve('./src/components/plugins'))
   }
 }

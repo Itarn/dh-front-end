@@ -20,7 +20,7 @@
     </div>
 
     <!-- 编辑器部分 -->
-    <editor-cell :button="editor.button">
+    <editor-cell :button="editor.button" v-if="status==='editing'">
     <!-- <editor-cell> -->
       <!-- <base-button slot="center" class="plr5 h25 fs12" type="editing">编辑</base-button> -->
       <!-- <div slot="columns"></div> -->
@@ -28,7 +28,6 @@
         <div v-for="editorProp in editorPropsPanels" :key="editorProp.id">
           <EditorControl
           :editorProp="editorProp"
-          @valChange="valChangeHandler"
           >
           </EditorControl>
         </div>
@@ -38,26 +37,26 @@
 </template>
 
 <script>
-import { createNamespace, cloneDeep } from '@/utils'
+import { createBemNamespace, cloneDeep } from '@/utils'
 
-import EditableDiv from 'e/panels/attr/EditableDiv'
-import EditorCell from 'e/panels/cell'
-import EditorControl from 'e/panels/control'
+// import EditableDiv from 'e/panels/attr/EditableDiv'
+// import EditorCell from 'e/panels/cell'
+// import EditorControl from 'e/panels/control'
 
 import { mapState } from 'vuex'
 
-import { DataEditor } from 'm/MLayout/editor'
-// import { dataShape } from 'm/MLayout/props'
+import { DataEditor } from 'p/layout/editor'
+// import { dataShape } from 'p/layout/props'
 
 // import { ChildrenMixin } from '@/mixins/relation'
 
-const [, bem] = createNamespace('m', 'layout')
+const bem = createBemNamespace('p', 'layout')
 
 export default {
   components: {
-    EDiv: EditableDiv,
-    EditorCell,
-    EditorControl
+    EDiv: () => import('e/panels/attr/EditableDiv'),
+    EditorCell: () => import('e/panels/cell'),
+    EditorControl: () => import('e/panels/control')
   },
 
   // mixins: [
@@ -130,7 +129,7 @@ export default {
 
 <style scoped lang="scss">
 
-.m-layout {
+.p-layout {
 
   &__col {
     width: 100%; height: 100%;

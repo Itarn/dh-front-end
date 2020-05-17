@@ -30,8 +30,8 @@
 // import vueDraggable from 'vuedraggable'
 import mixin from './mixin'
 
-// import { DataEditor } from 'm/MLayout/editor'
-// import { dataShape } from 'm/MLayout/props'
+// import { DataEditor } from 'p/layout/editor'
+// import { dataShape } from 'p/layout/props'
 
 export default {
   name: 'grid',

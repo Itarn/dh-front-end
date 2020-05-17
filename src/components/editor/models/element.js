@@ -3,31 +3,33 @@ import { genUUID, cloneDeep, setVal } from '../../../utils'
 class Element {
   constructor (ele) {
     this.name = ele.name
-    this.uuid = genUUID()
+    this.uuid = ele.uuid || genUUID()
 
-    // const moduleProps = cloneDeep(ele.props)
-    this.moduleProps = {}
+    this.packageInfo = ele.packageInfo || null
+
+    // const pluginProps = cloneDeep(ele.props)
+    this.pluginProps = {}
     Object.keys(ele.props).filter(key => key !== 'editor').map(key => {
       const defaultVal = ele.props[key].default
 
       if (defaultVal) {
         if (typeof defaultVal === 'function') {
-          this.moduleProps[key] = defaultVal()
+          this.pluginProps[key] = defaultVal()
         } else {
-          this.moduleProps[key] = defaultVal
+          this.pluginProps[key] = defaultVal
         }
       } else {
-        this.moduleProps[key] = ele.props[key]
+        this.pluginProps[key] = ele.props[key]
       }
     })
   }
 
   getProp (propNme) {
-    return this.moduleProps[propNme]
+    return this.pluginProps[propNme]
   }
 
   setPropValue (propName, value) {
-    setVal(this.moduleProps, propName, cloneDeep(value))
+    setVal(this.pluginProps, propName, cloneDeep(value))
   }
 }
 
