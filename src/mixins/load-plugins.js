@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Layout from '@/components/plugins/layout'
+import Layout from 'p/dh-layout'
 
 export const pluginsList = [
   {

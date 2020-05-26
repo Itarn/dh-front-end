@@ -24,6 +24,7 @@
 
 <script>
 import { mapActions, mapState } from 'vuex'
+import stickyUIEditor from './stickyUIEditor'
 
 import editorService from '@/service/editor.service.js'
 
@@ -38,13 +39,14 @@ export default {
     return {}
   },
 
+  // components: {
+  //   EditorControl
+  // },
+
   methods: {
     ...mapActions(['elementManager', 'updateStatus']),
     clone (value) {
-      this.elementManager({
-        type: 'add',
-        value
-      })
+      this.elementManager({ type: 'add', value })
     },
     getPage (id) {
       editorService.getPageDetail({ id })
@@ -71,11 +73,7 @@ export default {
         })
     },
     curComponent (ele) {
-      return {
-        render (h) {
-          return h(ele.name, { props: { ...ele.pluginProps, uuid: ele.uuid } })
-        }
-      }
+      return stickyUIEditor(ele)
     }
   },
 
@@ -84,7 +82,9 @@ export default {
   },
 
   created () {
+    // 设置当前编辑状态：
     this.updateStatus('editing')
+    // 获取当前 page 依赖的模块及 props
     this.getPage(this.id)
   }
 }

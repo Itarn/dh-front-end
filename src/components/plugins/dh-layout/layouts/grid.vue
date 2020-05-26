@@ -9,29 +9,25 @@
   chosenClass="chosen"
   dragClass="drag"
   :animation="400"
-  :gutter="props.gutter.mapVal[gutter]"
+  :gutter="gutter"
   >
-    <!-- <transition-group> -->
-      <base-col :ratioNum="col" v-for="(val, index) in data" :key="index">
-        <Column
-        :index="index"
-        :height="height"
-        :data="val"
-        :editor="{ button: ['druggle'] }"
-        >
-        </Column>
-      </base-col>
-    <!-- </transition-group> -->
+    <base-col :ratioNum="col" v-for="(val, index) in data" :key="index">
+      <Column
+      :index="index"
+      :height="height"
+      :data="val"
+      >
+      <!-- :editor="{ button: ['druggle'] }" -->
+      <template slot="columnEditor">
+        <slot name="columnEditor" :data="val" :editor="{ button: ['druggle'] }" />
+      </template>
+      </Column>
+    </base-col>
   </RowSort>
 </template>
 
 <script>
-// import { cloneDeep, isObject } from '@/utils'
-// import vueDraggable from 'vuedraggable'
 import mixin from './mixin'
-
-// import { DataEditor } from 'p/layout/editor'
-// import { dataShape } from 'p/layout/props'
 
 export default {
   name: 'grid',
@@ -43,28 +39,20 @@ export default {
   },
   created () {
     this.$bus.on('draggle', this.draggleHandler)
+
+    console.log(this.props)
   },
   components: {
     // vueDraggable,
   },
   props: ['data', 'gutter', 'col', 'row', 'height'],
   methods: {
-    getBaseRowData () {
-      return {
-        props: {
-          gutter: this.props.gutter.mapVal[this.gutter]
-        }
-      }
-    },
     draggleHandler (draggle) {
       this.notDraggle = draggle
     },
     changeHandler (e) {
       console.log(e)
     }
-    // draggleStartHandler (e) {
-    //   console.log(e, 'start')
-    // }
   },
   mixins: [mixin],
   computed: {

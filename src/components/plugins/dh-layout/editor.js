@@ -95,8 +95,8 @@ export const MEditor = [
         type: 'e-select',
         label: '间距',
         propArr: [
-          { label: '小', value: 'min' },
-          { label: '大', value: 'max' }
+          { label: '小', value: '10' },
+          { label: '大', value: '30' }
         ]
       },
       wideType: {

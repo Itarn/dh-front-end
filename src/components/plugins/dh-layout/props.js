@@ -44,12 +44,7 @@ export default {
   },
   gutter: {
     type: String,
-    default: 'max', // min max
-    mapVal: {
-      none: 0,
-      min: 10,
-      max: 30
-    }
+    default: '30' // min max
   },
   wideType: {
     type: String,

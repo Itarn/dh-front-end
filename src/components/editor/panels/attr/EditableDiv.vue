@@ -1,36 +1,42 @@
 <template>
   <div
-  :class="[bem({ editing })]"
-  :contenteditable="editing"
-  @blur="valChangeHandler"
+  :class="[bem({ editing: status === 'editing' })]"
+  :contenteditable="status === 'editing'"
+  @blur="blurHandler"
   >
-  <!-- @input="inputHandler" -->
-  {{ data }}
+    <slot />
   </div>
 </template>
 
 <script>
 import { createNamespace } from '@/utils'
+import { mapState } from 'vuex'
 
 const [, bem] = createNamespace('e', 'div')
 
 export default {
   props: {
-    editing: {
-      type: Boolean,
-      default: false
-    },
-    data: {
+    keyChain: {
       type: [String],
       default: ''
     }
   },
+  inject: [
+    'valChangeHandler'
+  ],
   methods: {
     bem (...arg) { return bem(...arg) },
-    valChangeHandler ($event) {
+    blurHandler ($event) {
       console.log($event.target.innerText)
-      this.$emit('valChange', { $event, val: $event.target.innerText })
+      if (this.status === 'editing') {
+        this.valChangeHandler({ $event, val: $event.target.innerText }, { key: this.keyChain })
+      }
     }
+  },
+  computed: {
+    ...mapState({
+      status: ({ status = 'prod' }) => status
+    })
   }
 }
 </script>

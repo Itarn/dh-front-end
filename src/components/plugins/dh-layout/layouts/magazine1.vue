@@ -1,7 +1,7 @@
 <template>
   <BaseRow :gutter="props.gutter.mapVal[gutter]" align="stretch">
     <BaseCol blockNum="4">
-      <BaseRow :gutter="props.gutter.mapVal[gutter]">
+      <BaseRow :gutter="gutter">
         <BaseCol blockNum="12" v-for="(val, index) in firstTwoofData" :key="index">
           <Column
           :index="index"

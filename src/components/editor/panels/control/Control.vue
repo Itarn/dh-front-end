@@ -74,6 +74,9 @@ export default {
     btnClickHandler () {
       this.open = !this.open
     }
+  },
+  created () {
+    // console.log(this.editorProp.label)
   }
 }
 </script>
