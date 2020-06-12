@@ -72,6 +72,8 @@ function computeChildrenAndOffsets(children, slot, scopedSlot) {
     footerOffset = footer.length;
     children = children ? [...children, ...footer] : [...footer];
   }
+
+  console.log(footerOffset)
   return { children, headerOffset, footerOffset };
 }
 
