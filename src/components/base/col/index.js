@@ -1,3 +1,3 @@
-import Col from './Col'
+import Col from './col'
 
 export default Col
