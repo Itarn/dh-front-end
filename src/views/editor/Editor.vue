@@ -7,7 +7,7 @@ export default {
   extends: CoreEditor,
   mixins: [loadPluginMixin],
   created () {
-    // console.log(this, 'editor')
+    // console.log(this, 'editor11')
   }
 }
 </script>
