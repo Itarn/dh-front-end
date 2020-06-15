@@ -21,8 +21,8 @@ const RowSort = Vue.extend({ mixins: [draggable, BaseRow] })
 export default {
   components: {
     BaseRow,
-    BaseCol,
     RowSort,
+    BaseCol,
     // ColSort,
     BaseButton,
     Column,

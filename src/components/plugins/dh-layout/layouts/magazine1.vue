@@ -1,5 +1,5 @@
 <template>
-  <BaseRow :gutter="props.gutter.mapVal[gutter]" align="stretch">
+  <BaseRow :gutter="gutter" align="stretch">
     <BaseCol blockNum="4">
       <BaseRow :gutter="gutter">
         <BaseCol blockNum="12" v-for="(val, index) in firstTwoofData" :key="index">
@@ -34,6 +34,9 @@ export default {
     firstTwoofData () {
       return this.data && this.data.slice(0, 2)
     }
+  },
+  create () {
+    console.log()
   }
 }
 </script>

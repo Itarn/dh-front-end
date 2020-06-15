@@ -17,7 +17,7 @@
       :height="height"
       :data="val"
       >
-      <!-- :editor="{ button: ['druggle'] }" -->
+
       <template slot="columnEditor">
         <slot name="columnEditor" :data="val" :editor="{ button: ['druggle'] }" />
       </template>
@@ -40,7 +40,7 @@ export default {
   created () {
     this.$bus.on('draggle', this.draggleHandler)
 
-    console.log(this.props)
+    // console.log(this.props)
   },
   components: {
     // vueDraggable,

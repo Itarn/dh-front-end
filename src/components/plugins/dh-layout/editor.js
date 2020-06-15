@@ -2,6 +2,8 @@ import { RelativeFn } from '@/utils/modules'
 import { cloneDeep } from '@/utils'
 import { dataShape } from './props'
 
+import { layouts } from './layouts'
+
 // relative logic
 // common fn
 function actedUponData (newLength, data) {
@@ -35,9 +37,9 @@ let rowColActedData = {
 let layoutTypeActedData = {
   key: 'data',
   cb (layoutType, data) {
-    const curLayout = this.getCurLayout(layoutType)
+    const curLayout = layouts.filter(l => l.name === layoutType)[0]
 
-    console.log('curLayout', curLayout)
+    console.log(this)
     if (curLayout.type === 'magazine' && curLayout.needDataLength) {
       return actedUponData(curLayout.needDataLength, data)
     } else if (curLayout.type === 'grid') {

@@ -17,6 +17,7 @@ export default function (ele) {
         editorDataPanels: null
       }
     },
+
     provide () {
       return {
         valChangeHandler: this.valChangeHandler.bind(this, ele.uuid),
@@ -35,7 +36,7 @@ export default function (ele) {
           info.relative.forEach(r => {
             const { key: rkey, cb = null } = r
             if (key && cb) {
-              this.updateElement({ uuid, propKey: rkey, propVal: cb({ key, val: propVal, ctx: this }) })
+              this.updateElement({ uuid, propKey: rkey, propVal: cb({ key, val: propVal, ctx: props }) })
             }
           })
         }
