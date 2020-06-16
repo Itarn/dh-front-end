@@ -1,0 +1,9 @@
+{
+  "name": "@dunhuang-pc/dh-grid",
+  "version": "1.0.0",
+  "author": "itarn",
+  "files": [
+    "dist"
+  ],
+  "license": "ISC"
+}
