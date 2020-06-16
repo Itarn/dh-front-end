@@ -30,9 +30,10 @@ export default {
     EditorControl,
     EditorAttr
   },
-  inject: [
-    'props',
-    'valChangeHandler'
-  ]
+  inject: {
+    valChangeHandler: {
+      default: () => {}
+    }
+  }
 }
 </script>

@@ -21,13 +21,14 @@ export default {
       default: ''
     }
   },
-  inject: [
-    'valChangeHandler'
-  ],
+  inject: {
+    valChangeHandler: {
+      default: () => {}
+    }
+  },
   methods: {
     bem (...arg) { return bem(...arg) },
     blurHandler ($event) {
-      console.log($event.target.innerText)
       if (this.status === 'editing') {
         this.valChangeHandler({ $event, val: $event.target.innerText }, { key: this.keyChain })
       }

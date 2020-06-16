@@ -24,13 +24,14 @@ import MSection from 'p/dh-section'
 import props from './props'
 import { layouts } from './layouts'
 
+import packageInfo from './package.json'
+
 const createComponent = createCpnNamespace('dh', 'layout')
 
 export default createComponent({
   packageInfo: {
-    package: '@dunhuang-pc/dh-layout',
-    version: '1.0.2',
-    name: 'dh-layout'
+    package: packageInfo.name,
+    version: packageInfo.version
   },
   label: '网格',
 
@@ -80,8 +81,7 @@ export default createComponent({
 
   watch: {},
 
-  created () {
-  }
+  created () {}
 })
 </script>
 
@@ -105,7 +105,7 @@ export default createComponent({
   }
 
   &:hover {
-     border: 1px solid #fff;
+    border: 1px solid #fff;
     border-radius: 5px;
   }
 

@@ -7,11 +7,11 @@
     <div :class="[bem('text-wrapper')]">
       <e-div
       :class="[bem('title')]"
-      :keyChain="keyRecorder(index, 'title')"
+      :keyChain="keyRecorder && keyRecorder(index, 'title')"
       >{{ data.title }}</e-div>
       <e-div
       :class="[bem('subtitle')]"
-      :keyChain="keyRecorder(index, 'subtitle')"
+      :keyChain="keyRecorder && keyRecorder(index, 'subtitle')"
       >{{ data.subTitle }}</e-div>
     </div>
 
@@ -30,7 +30,6 @@ const bem = createBemNamespace('p', 'layout')
 export default {
   components: {
     EDiv: EditableDiv
-    // EditorCell: () => import('e/panels/cell')
   },
 
   props: {
@@ -42,25 +41,20 @@ export default {
     },
     data: {
       type: Object
-    },
-    editor: {
-      type: Object,
-      default: () => ({
-        button: []
-      })
     }
   },
 
-  inject: [
-    'keyRecorder'
-  ],
+  inject: {
+    keyRecorder: {
+      default: () => {}
+    }
+  },
 
   methods: {
     bem (...arg) { return bem(...arg) }
   },
 
-  created () {
-  }
+  created () {}
 }
 </script>
 

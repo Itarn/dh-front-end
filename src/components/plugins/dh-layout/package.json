@@ -1,0 +1,9 @@
+{
+  "name": "@dunhuang-pc/dh-layout",
+  "version": "1.0.13",
+  "author": "itarn",
+  "files": [
+    "dist"
+  ],
+  "license": "ISC"
+}

@@ -29,6 +29,8 @@
 <script>
 import mixin from './mixin'
 
+import { mapState } from 'vuex'
+
 export default {
   name: 'grid',
   type: 'grid',
@@ -38,9 +40,7 @@ export default {
     }
   },
   created () {
-    this.$bus.on('draggle', this.draggleHandler)
-
-    // console.log(this.props)
+    this.editing && this.$bus.on('draggle', this.draggleHandler)
   },
   components: {
     // vueDraggable,
@@ -49,13 +49,13 @@ export default {
   methods: {
     draggleHandler (draggle) {
       this.notDraggle = draggle
-    },
-    changeHandler (e) {
-      console.log(e)
     }
   },
   mixins: [mixin],
   computed: {
+    ...mapState([
+      'editing'
+    ]),
     draggableData: {
       get () {
         return this.data
@@ -67,7 +67,7 @@ export default {
   },
   watch: {},
   beforeDestroy () {
-    this.$bus.$off('draggle', this.draggleHandler)
+    this.editing && this.$bus.$off('draggle', this.draggleHandler)
   }
 }
 </script>

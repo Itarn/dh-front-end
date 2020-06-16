@@ -34,9 +34,6 @@ export default {
     firstTwoofData () {
       return this.data && this.data.slice(0, 2)
     }
-  },
-  create () {
-    console.log()
   }
 }
 </script>

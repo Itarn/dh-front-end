@@ -34,12 +34,11 @@ export default {
       editorService.getPageDetail({ id })
         .then(async res => {
           const plugins = JSON.parse(res.plugins) || []
-          console.log(plugins, 'plugins')
 
           for (let i = 0; i < plugins.length; i++) {
             let each = plugins[i]
             // 加载 plugins
-            await this.loadPlugin(each.packageInfo).then(() => {
+            await this.loadPlugin({ ...each.packageInfo, name: each.name }).then(() => {
               Vue.component(each.name, window[each.name].default)
               // 数据 render
               this.clone({ name: each.name, props: each.pluginProps, uuid: each.uuid })
@@ -58,7 +57,7 @@ export default {
       }
     },
     loadPlugin (info) {
-      let src = `https://cdn.jsdelivr.net/npm/${info.package}@${info.version}/${info.name}.umd.js`
+      let src = `https://cdn.jsdelivr.net/npm/${info.package}@${info.version}/dist/${info.name}.umd.js`
 
       return loadJs(src)
     }
