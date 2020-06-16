@@ -40,7 +40,7 @@ export default {
     }
   },
   created () {
-    this.editing && this.$bus.on('draggle', this.draggleHandler)
+    this.status === 'editing' && this.$bus.on('draggle', this.draggleHandler)
   },
   components: {
     // vueDraggable,
@@ -54,7 +54,7 @@ export default {
   mixins: [mixin],
   computed: {
     ...mapState([
-      'editing'
+      'status'
     ]),
     draggableData: {
       get () {
@@ -67,7 +67,7 @@ export default {
   },
   watch: {},
   beforeDestroy () {
-    this.editing && this.$bus.$off('draggle', this.draggleHandler)
+    this.status === 'editing' && this.$bus.$off('draggle', this.draggleHandler)
   }
 }
 </script>
