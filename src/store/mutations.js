@@ -19,6 +19,7 @@ const mutations = {
     if (type === 'add') {
       let { name, props = null, packageInfo = null, uuid = null } = value
       const vm = getVM(name)
+      console.log('vm', vm)
 
       if (!props) props = vm.$options.props
       if (!packageInfo) packageInfo = vm.$options.packageInfo

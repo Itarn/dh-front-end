@@ -58,7 +58,7 @@ $gap: 10px;
       display: none;
       content: '';
       position: absolute; top: -$gap; bottom: -$gap; left: -$gap; right: -$gap;
-      border: 1px solid #fff;
+      border: 1px solid #404040;
       border-radius: 5px;
     }
     &:hover {

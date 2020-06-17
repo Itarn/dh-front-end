@@ -50,7 +50,7 @@ let layoutTypeActedData = {
   }
 }
 
-export const MEditor = [
+export const PEditor = [
   {
     id: 1,
     label: '网格布局',

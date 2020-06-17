@@ -1,9 +1,4 @@
-import { cloneDeep } from '@/utils'
-
-// default info
-const row = 2
-const col = 3
-export const dataShape = {
+const dataShape = {
   img: 'https://static001-test.geekbang.org/resource/image/50/b5/505458a8ba12dd2a2d9410e68627a2b5.jpg',
   link: 'https://www.geekbang.org',
   target: '_blank',
@@ -19,20 +14,21 @@ export default {
   },
   data: {
     type: Array,
+    default: () => []
+  },
+  dataShape: {
+    type: Object,
     default: () => {
-      let arr = Array.from({ length: col * row }, (v, i) => {
-        return cloneDeep(dataShape)
-      })
-      return arr
+      return dataShape
     }
   },
   row: {
     type: [String, Number],
-    default: row
+    default: 2
   },
   col: {
     type: [String, Number],
-    default: col
+    default: 3
   },
   height: {
     type: String,

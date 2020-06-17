@@ -1,0 +1,11 @@
+/*
+ * 多行文字超出部分显示省略号
+ * autoprefixer 为 webpack 兼容方案，防止过时属性被删除
+ */
+ @mixin row($line) {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: $line;
+  /* autoprefixer: ignore next */
+  -webkit-box-orient: vertical;
+}

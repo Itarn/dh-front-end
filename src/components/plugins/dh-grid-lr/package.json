@@ -1,0 +1,10 @@
+{
+  "name": "@dunhuang-pc/dh-grid-lr",
+  "label": "图文左右布局",
+  "version": "1.0.0",
+  "author": "itarn",
+  "files": [
+    "dist"
+  ],
+  "license": "ISC"
+}

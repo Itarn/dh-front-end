@@ -11,7 +11,7 @@ class Element {
     this.packageInfo = ele.packageInfo || null
 
     // 模块的 props
-    // const pluginProps = cloneDeep(ele.props)
+    console.log(ele, 'ele')
     this.pluginProps = {}
     Object.keys(ele.props).filter(key => key !== 'editor').map(key => {
       const defaultVal = ele.props[key].default

@@ -6,6 +6,7 @@ const resolve = (dir) => {
 
 const prependData = `
   @import '~@/assets/css/_var.scss';\n
+  @import '~@/assets/css/mixins';\n
 `
 
 module.exports = {

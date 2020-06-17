@@ -79,8 +79,8 @@ export default function (ele) {
     },
     created () {
       import('p/' + ele.name + '/editor')
-        .then(({ MEditor, DataEditor }) => {
-          this.editorSectionPanels = this.getEditorPropsPanels(MEditor, ele.pluginProps)
+        .then(({ PEditor, DataEditor }) => {
+          this.editorSectionPanels = this.getEditorPropsPanels(PEditor, ele.pluginProps)
           this.editorDataPanels = this.getEditorPropsPanels.bind(this, DataEditor)
         })
         .catch(err => {

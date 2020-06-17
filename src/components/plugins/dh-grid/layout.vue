@@ -17,7 +17,7 @@
     </div>
 
     <template slot="editor">
-      <slot name="editor"></slot>
+      <slot name="sectionEditor"></slot>
     </template>
   </MSection>
 </template>
@@ -30,25 +30,17 @@ import { mapState, mapActions } from 'vuex'
 
 import BaseRow from 'b/row'
 import BaseCol from 'b/col'
-import BaseButton from 'b/button'
+// import BaseButton from 'b/button'
 import draggable from 'b/draggable'
 
 import MSection from 'p/dh-section'
 
 import props from './props'
 
-import packageInfo from './package.json'
-
 const RowSort = Vue.extend({ mixins: [draggable, BaseRow] })
-const createComponent = createCpnNamespace('dh', 'layout')
+const createComponent = createCpnNamespace('dh', 'grid')
 
 export default createComponent({
-  packageInfo: {
-    package: packageInfo.name,
-    version: packageInfo.version
-  },
-  label: '网格-图文左右结构',
-
   data () {
     return {
       notDraggle: true
@@ -58,8 +50,14 @@ export default createComponent({
   components: {
     RowSort,
     BaseCol,
-    BaseButton,
+    // BaseButton,
     MSection
+  },
+
+  inject: {
+    valChangeHandler: {
+      default: () => {}
+    }
   },
 
   props,
@@ -96,31 +94,3 @@ export default createComponent({
   }
 })
 </script>
-
-<style scoped lang="scss">
-
-.dh-layout {
-
-  &__col {
-    width: 100%; height: 100%;
-    border: 1px solid #ccc;
-
-    &--min-height {
-      height: 165px;
-    }
-    &--middle-height {
-      height: 240px;
-    }
-    &--max-height {
-      height: 340px;
-    }
-  }
-
-  &:hover {
-    border: 1px solid #fff;
-    border-radius: 5px;
-  }
-
-}
-
-</style>

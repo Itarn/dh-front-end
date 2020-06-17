@@ -1,6 +1,6 @@
 import Vue from 'vue'
 // import Layout from 'p/dh-layout'
-import DhGridStyle1 from 'p/dh-grid-style1'
+import DhGridLr from 'p/dh-grid-lr'
 
 export const pluginsList = [
   // {
@@ -9,9 +9,9 @@ export const pluginsList = [
   //   component: Layout
   // }
   {
-    label: DhGridStyle1.label,
-    name: DhGridStyle1.name,
-    component: DhGridStyle1
+    label: DhGridLr.label,
+    name: DhGridLr.name,
+    component: DhGridLr
   }
 ]
 
