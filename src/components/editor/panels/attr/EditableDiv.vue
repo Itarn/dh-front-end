@@ -1,9 +1,11 @@
 <template>
   <div
+  ref="edit"
   :class="[bem({ editing: status === 'editing' })]"
-  :contenteditable="status === 'editing'"
+  :contentEditable="status === 'editing'"
   @blur="blurHandler"
   >
+    <i :class="[bem('border')]" v-if="status === 'editing'"></i>
     <slot />
   </div>
 </template>
@@ -15,6 +17,12 @@ import { mapState } from 'vuex'
 const [, bem] = createNamespace('e', 'div')
 
 export default {
+  data () {
+    return {
+      savedRange: null,
+      isInFocus: false
+    }
+  },
   props: {
     keyChain: {
       type: [String],
@@ -54,17 +62,15 @@ $gap: 10px;
 
   &--editing {
     cursor: text;
-    &::after {
-      display: none;
-      content: '';
-      position: absolute; top: -$gap; bottom: -$gap; left: -$gap; right: -$gap;
-      border: 1px solid #404040;
-      border-radius: 5px;
-    }
+  }
+
+  &__border {
+    display: none;
+    position: absolute; top: -$gap; bottom: -$gap; left: -$gap; right: -$gap;
+    border: 1px solid #404040;
+    border-radius: 5px;
     &:hover {
-      &::after{
-        display: block;
-      }
+      display: block;
     }
   }
 
